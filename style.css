@@ -1,140 +1,116 @@
-:root{
-  --pink:#e21856;
-  --pink-dark:#c11149;
-  --ink:#232323;
-  --muted:#8a8a8a;
-  --border:#e3e3e6;
-  --danger:#b8443a;
-  --danger-bg:#fbe9e6;
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-*{box-sizing:border-box;}
-
-html, body{height:100%;}
-
-body{
-  margin:0;
-  font-family:"IBM Plex Sans Arabic", Tahoma, sans-serif;
-  color:var(--ink);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  min-height:100vh;
-  padding:20px;
-
-  background-color:#b7ada1;
-  background-image:
-    repeating-linear-gradient(120deg, rgba(255,255,255,0.10) 0px, rgba(255,255,255,0.10) 2px, transparent 2px, transparent 60px),
-    repeating-linear-gradient(35deg, rgba(80,70,60,0.10) 0px, rgba(80,70,60,0.10) 1.5px, transparent 1.5px, transparent 90px),
-    linear-gradient(160deg, #cfc6b8 0%, #b7ada1 35%, #a89e91 55%, #cbc2b3 75%, #a49a8d 100%);
-  background-attachment:fixed;
+body {
+    /* وێنەی باکگراوندی مەڕمەڕەکە */
+    background: url('https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?q=80&w=1920') no-repeat center center fixed;
+    background-size: cover;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-.wrap{width:100%; max-width:380px;}
-
-.card{
-  background:#fbfaf8;
-  border-radius:22px;
-  padding:36px 30px 32px;
-  text-align:center;
-  box-shadow:
-    0 1px 2px rgba(0,0,0,0.06),
-    0 28px 55px -20px rgba(0,0,0,0.45);
+.login-container {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
 }
 
-.logo{
-  width:64px; height:64px;
-  margin:0 auto 14px;
-  border-radius:50%;
-  background:#f1efe9;
-  display:flex;
-  align-items:center;
-  justify-content:center;
+.logo-area img {
+    width: 70px;
+    height: auto;
+    margin-bottom: 10px;
 }
 
-.brand{
-  font-family:"Montserrat", sans-serif;
-  font-size:26px;
-  font-weight:800;
-  letter-spacing:1.5px;
-  margin:0 0 6px;
-  color:var(--ink);
+.brand-name {
+    font-size: 24px;
+    font-weight: bold;
+    color: #111;
+    letter-spacing: 0.5px;
+    margin-bottom: 5px;
 }
 
-.subtitle{
-  font-size:14.5px;
-  color:var(--muted);
-  margin:0 0 18px;
-  font-weight:500;
+.subtitle {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 15px;
 }
 
-.divider{
-  border-top:1px solid var(--border);
-  margin:0 0 22px;
+.input-group {
+    margin-bottom: 15px;
+    text-align: right;
 }
 
-.field{
-  text-align:right;
-  margin-bottom:16px;
+.input-group label {
+    display: block;
+    font-size: 12px;
+    color: #777;
+    margin-bottom: 5px;
+    padding-right: 5px;
 }
-.field label{
-  display:block;
-  font-size:13px;
-  color:var(--muted);
-  margin:0 2px 7px;
-  font-weight:500;
-}
-input{
-  width:100%;
-  border:1.5px solid var(--border);
-  border-radius:11px;
-  padding:12px 14px;
-  font-size:14.5px;
-  background:#f4f6fb;
-  color:var(--ink);
-  font-family:inherit;
-  text-align:right;
-  transition:border-color .15s ease, box-shadow .15s ease;
-}
-input:focus{
-  outline:none;
-  border-color:var(--pink);
-  background:#fff;
-  box-shadow:0 0 0 3px rgba(226,24,86,0.10);
-}
-input::placeholder{color:#aeb3c0;}
 
-.error-msg{
-  color:var(--danger);
-  background:var(--danger-bg);
-  font-size:13px;
-  padding:9px 12px;
-  border-radius:9px;
-  margin:0 0 14px;
-  display:none;
-  text-align:center;
+.input-group input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #dcdcdc;
+    border-radius: 6px;
+    background-color: #f0f4f9;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.2s;
 }
-.error-msg.show{display:block;}
 
-.login-btn{
-  width:100%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:8px;
-  background:linear-gradient(135deg, var(--pink), var(--pink-dark));
-  border:none;
-  color:#fff;
-  font-family:inherit;
-  font-size:15.5px;
-  font-weight:700;
-  padding:14px;
-  border-radius:12px;
-  cursor:pointer;
-  margin-top:6px;
-  box-shadow:0 10px 22px -10px rgba(226,24,86,0.55);
-  transition:transform .1s ease, filter .15s ease;
+.input-group input:focus {
+    border-color: #e91e63;
+    background-color: #fff;
 }
-.login-btn:hover{filter:brightness(1.05);}
-.login-btn:active{transform:scale(0.98);}
-.arrow{font-size:16px;}
+
+.btn-login {
+    width: 100%;
+    padding: 14px;
+    background-color: #e91e63;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    margin-top: 20px;
+    transition: background 0.2s;
+}
+
+.btn-login:hover {
+    background-color: #d81b60;
+}
+
+/* دروستکردنی ئایکۆنی دەرگا بە CSS */
+.login-icon {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border: 2px solid currentColor;
+    border-left: none;
+    position: relative;
+}
+.login-icon::before {
+    content: '→';
+    position: absolute;
+    left: -6px;
+    top: -7px;
+    font-size: 14px;
+}
