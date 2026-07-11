@@ -2,157 +2,84 @@
 <html lang="ku" dir="rtl" class="notranslate">
 <head>
     <meta charset="UTF-8">
-    <meta name="google" content="notranslate">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>KRD Receipt System | داشبۆرد</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         body { background-color: #f4f6f9; color: #333; padding: 15px; }
-        
-        .header-top { 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            background: #fff; 
-            padding: 12px 20px; 
-            border-radius: 8px; 
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05); 
-            margin-bottom: 20px; 
-        }
+        .header-top { display: flex; justify-content: space-between; align-items: center; background: #fff; padding: 12px 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); margin-bottom: 20px; }
         .company-title { font-size: 18px; font-weight: bold; color: #2c3e50; }
-        .btn-logout-small { 
-            padding: 6px 12px; 
-            border-radius: 5px; 
-            font-size: 13px; 
-            font-weight: bold; 
-            border: 1px solid #e74c3c; 
-            background-color: transparent; 
-            color: #e74c3c; 
-            cursor: pointer; 
-            display: inline-flex; 
-            align-items: center; 
-            gap: 6px; 
-            transition: all 0.2s ease;
-        }
-        .btn-logout-small:hover { background-color: #e74c3c; color: #fff; }
-
-        .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 15px; }
-        .stats-grid-bottom { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 25px; max-width: 75%; margin-right: auto; margin-left: auto; }
+        .btn-logout-small { padding: 6px 12px; border-radius: 5px; font-size: 13px; font-weight: bold; border: 1px solid #e74c3c; background-color: transparent; color: #e74c3c; cursor: pointer; }
         
+        .stats-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 15px; }
         .stat-card { background: #fff; padding: 15px; border-radius: 8px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.04); border: 1px solid #e2e8f0; }
         .stat-card i { font-size: 24px; margin-bottom: 8px; display: block; }
         .stat-card .num { font-size: 20px; font-weight: bold; margin-bottom: 4px; color: #2c3e50; }
         .stat-card .label { font-size: 11px; color: #7f8c8d; font-weight: bold; }
         
-        .c-total { color: #e91e63; }
-        .c-success { color: #2ecc71; }
-        .c-warning { color: #e67e22; }
-        .c-danger { color: #f1c40f; }
-
-        .menu-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 12px; }
-        .menu-grid-bottom { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
-        
-        .btn-action { display: flex; align-items: center; justify-content: center; gap: 8px; padding: 14px; border-radius: 6px; font-size: 14px; font-weight: bold; text-decoration: none; border: none; cursor: pointer; color: #2c3e50; background-color: #bdc3c7; }
-        .btn-action.primary { background-color: #e91e63; color: #fff; }
-        .btn-action i { font-size: 16px; }
-
-        @media (max-width: 768px) {
-            .stats-grid { grid-template-columns: repeat(2, 1fr); }
-            .stats-grid-bottom { grid-template-columns: repeat(2, 1fr); max-width: 100%; }
-            .menu-grid { grid-template-columns: 1fr; }
-            .menu-grid-bottom { grid-template-columns: 1fr; }
-        }
+        .menu-grid { display: grid; grid-template-columns: repeat(1, 1fr); gap: 12px; margin-top: 20px; }
+        .btn-action { display: flex; align-items: center; justify-content: center; gap: 8px; padding: 14px; border-radius: 6px; font-weight: bold; text-decoration: none; color: #fff; background-color: #e91e63; }
     </style>
 </head>
 <body>
 
     <div class="header-top">
         <div class="company-title">KRD Receipt System</div>
-        <button onclick="logout()" class="btn-logout-small">
-            <i class="fa-solid fa-right-from-bracket"></i> دەرچوون
-        </button>
+        <button onclick="logout()" class="btn-logout-small">دەرچوون</button>
     </div>
 
     <div class="stats-grid">
-        <div class="stat-card">
-            <i class="fa-solid fa-dollar-sign c-total"></i>
-            <div class="num">$0</div>
-            <div class="label">کۆی گشتی</div>
-        </div>
-        <div class="stat-card">
-            <i class="fa-solid fa-circle-check c-success"></i>
-            <div class="num" id="loaded-count">0</div>
-            <div class="label">وەسڵی بارکراو</div>
-        </div>
-        <div class="stat-card">
-            <i class="fa-solid fa-circle-xmark c-warning"></i>
-            <div class="num">0</div>
-            <div class="label">وەسڵی بارنەکراو</div>
-        </div>
-        <div class="stat-card">
-            <i class="fa-solid fa-circle-exclamation c-danger"></i>
-            <div class="num">0</div>
-            <div class="label">وەسڵی قەرز</div>
-        </div>
-    </div>
-
-    <div class="stats-grid-bottom">
-        <div class="stat-card">
-            <i class="fa-solid fa-calendar-days c-total"></i>
-            <div class="num">$0</div>
-            <div class="label">فرۆشی ئەمڕۆ</div>
-        </div>
-        <div class="stat-card">
-            <i class="fa-solid fa-chart-line c-success"></i>
-            <div class="num">$0</div>
-            <div class="label">فرۆشی هەفتانە</div>
-        </div>
-        <div class="stat-card">
-            <i class="fa-solid fa-chart-bar c-total"></i>
-            <div class="num">$0</div>
-            <div class="label">فرۆشی مانگانە</div>
-        </div>
+        <div class="stat-card"><i class="fa-solid fa-check-circle" style="color:#2ecc71"></i><div class="num" id="count-bar">0</div><div class="label">وەسڵی بارکراو</div></div>
+        <div class="stat-card"><i class="fa-solid fa-dollar-sign" style="color:#e91e63"></i><div class="num" id="total-all">$0</div><div class="label">کۆی گشتی</div></div>
+        <div class="stat-card"><i class="fa-solid fa-exclamation-triangle" style="color:#f1c40f"></i><div class="num" id="count-qarz">0</div><div class="label">وەسڵی قەرز</div></div>
+        <div class="stat-card"><i class="fa-solid fa-times-circle" style="color:#e67e22"></i><div class="num" id="count-barnakra">0</div><div class="label">وەسڵی بارنەکراو</div></div>
+        <div class="stat-card"><i class="fa-solid fa-chart-line" style="color:#27ae60"></i><div class="num" id="total-week">$0</div><div class="label">فرۆشی هەفتانە</div></div>
+        <div class="stat-card"><i class="fa-solid fa-calendar-alt" style="color:#d35400"></i><div class="num" id="total-day">$0</div><div class="label">فرۆشی ئەمڕۆ</div></div>
+        <div class="stat-card" style="grid-column: span 2;"><i class="fa-solid fa-chart-bar" style="color:#8e44ad"></i><div class="num" id="total-month">$0</div><div class="label">فرۆشی مانگانە</div></div>
     </div>
 
     <div class="menu-grid">
-        <a href="create-receipt.html" class="btn-action primary"><i class="fa-solid fa-plus"></i> دروستکردنی وەسڵ</a>
-        <a href="all-receipts.html" class="btn-action"><i class="fa-solid fa-folder-open"></i> هەموو وەسڵەکان</a>
-        <a href="#" class="btn-action"><i class="fa-solid fa-chart-pie"></i> هێڵکارییەکان</a>
-    </div>
-    <div class="menu-grid-bottom">
-        <a href="#" class="btn-action"><i class="fa-solid fa-gear"></i> پانێڵی بەڕێوەبەر</a>
+        <a href="create-receipt.html" class="btn-action">دروستکردنی وەسڵ</a>
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            updateDashboardStats();
-        });
+        function updateDashboard() {
+            let receipts = JSON.parse(localStorage.getItem('savedReceipts')) || [];
+            let now = new Date();
+            
+            let counts = { bar: 0, qarz: 0, barnakra: 0 };
+            let totals = { all: 0, day: 0, week: 0, month: 0 };
 
-        function updateDashboardStats() {
-            // دەخوێنێتەوە لە 'savedReceipts' کە لە لاپەڕەی دروستکردنی وەسڵ پاشەکەوت دەکرێت
-            let rawData = localStorage.getItem('savedReceipts');
-            let receipts = [];
-            
-            if (rawData) {
-                try {
-                    receipts = JSON.parse(rawData);
-                } catch (e) {
-                    console.error("Error:", e);
-                }
-            }
-            
-            if (Array.isArray(receipts)) {
-                // تەنها ئەو وەسڵانە دەژمێرێت کە statusـیان "بارکراو"ە
-                let loadedReceipts = receipts.filter(receipt => receipt.status === 'بارکراو');
-                document.getElementById('loaded-count').innerText = loadedReceipts.length;
-            }
+            receipts.forEach(r => {
+                let rDate = new Date(r.date);
+                let amount = parseFloat(r.total) || 0;
+
+                // ئەژمارکردنی دۆخەکان
+                if(r.status === 'بارکراو') counts.bar++;
+                else if(r.status === 'قەرز') counts.qarz++;
+                else if(r.status === 'بارنەکراو') counts.barnakra++;
+
+                // ئەژمارکردنی پارەکان
+                totals.all += amount;
+                if(rDate.toDateString() === now.toDateString()) totals.day += amount;
+                if(rDate.getMonth() === now.getMonth() && rDate.getFullYear() === now.getFullYear()) totals.month += amount;
+                
+                let weekAgo = new Date(); weekAgo.setDate(now.getDate() - 7);
+                if(rDate >= weekAgo) totals.week += amount;
+            });
+
+            document.getElementById('count-bar').innerText = counts.bar;
+            document.getElementById('count-qarz').innerText = counts.qarz;
+            document.getElementById('count-barnakra').innerText = counts.barnakra;
+            document.getElementById('total-all').innerText = '$' + totals.all.toLocaleString();
+            document.getElementById('total-day').innerText = '$' + totals.day.toLocaleString();
+            document.getElementById('total-week').innerText = '$' + totals.week.toLocaleString();
+            document.getElementById('total-month').innerText = '$' + totals.month.toLocaleString();
         }
 
-        function logout() {
-            localStorage.removeItem('isLoggedIn');
-            window.location.replace("index.html");
-        }
+        function logout() { localStorage.removeItem('isLoggedIn'); window.location.replace("index.html"); }
+        document.addEventListener('DOMContentLoaded', updateDashboard);
     </script>
 </body>
 </html>
