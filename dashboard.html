@@ -1,99 +1,67 @@
 <!DOCTYPE html>
-<html lang="ku" dir="rtl" class="notranslate">
+<html lang="ku" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KRD Receipt System | داشبۆرد</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>داشبۆردی گشتی</title>
     <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        body { background-color: #f4f6f9; color: #333; padding: 15px; }
-        
-        .header-top { display: flex; justify-content: space-between; align-items: center; background: #fff; padding: 12px 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); margin-bottom: 20px; }
-        .company-title { font-size: 18px; font-weight: bold; color: #2c3e50; }
-        .btn-logout-small { padding: 6px 12px; border-radius: 5px; font-size: 13px; font-weight: bold; border: 1px solid #e74c3c; background-color: transparent; color: #e74c3c; cursor: pointer; }
-        
-        .stats-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 15px; }
-        .stat-card { background: #fff; padding: 15px; border-radius: 8px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.04); border: 1px solid #e2e8f0; }
-        .stat-card i { font-size: 24px; margin-bottom: 8px; display: block; }
-        .stat-card .num { font-size: 20px; font-weight: bold; margin-bottom: 4px; color: #2c3e50; }
-        .stat-card .label { font-size: 11px; color: #7f8c8d; font-weight: bold; }
-        
-        /* مێنووی خوارەوە - ڕیزبەندی داواکراو و ڕەنگی ڕەساسیی کاڵ */
-        .menu-footer { display: grid; grid-template-columns: 1fr; gap: 10px; margin-top: 20px; }
-        .btn-menu { 
-            background: #4a5d6e; /* ڕەساسیی کاڵ */
-            color: #ffffff; 
-            padding: 15px; 
-            border-radius: 8px; 
-            text-align: center; 
-            text-decoration: none; 
-            font-weight: bold; 
-            font-size: 14px; 
-        }
-        .btn-menu.primary { background: #e91e63; color: #fff; }
+        body { font-family: sans-serif; background: #f4f6f9; padding: 20px; }
+        .container { max-width: 900px; margin: auto; }
+        .nav-btn { background: #2c3e50; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; text-decoration: none; display: inline-block; }
+        table { width: 100%; border-collapse: collapse; background: #fff; margin-top: 20px; }
+        th, td { padding: 12px; border: 1px solid #ddd; text-align: center; }
+        th { background: #eee; }
     </style>
 </head>
 <body>
 
-    <div class="header-top">
-        <div class="company-title">KRD Receipt System</div>
-        <button onclick="logout()" class="btn-logout-small">دەرچوون</button>
-    </div>
+<div class="container">
+    <h2>داشبۆردی سەرەکی</h2>
+    <a href="create-receipt.html" class="nav-btn">+ دروستکردنی وەسڵی نوێ</a>
+    <a href="reports.html" class="nav-btn" style="background:#e91e63">ڕاپۆرتەکان</a>
 
-    <!-- کارتەکانی سەرەوە -->
-    <div class="stats-grid">
-        <div class="stat-card"><i class="fa-solid fa-check-circle" style="color:#2ecc71"></i><div class="num" id="count-bar">0</div><div class="label">وەسڵی بارکراو</div></div>
-        <div class="stat-card"><i class="fa-solid fa-dollar-sign" style="color:#e91e63"></i><div class="num" id="total-all">$0</div><div class="label">کۆی گشتی</div></div>
-        <div class="stat-card"><i class="fa-solid fa-exclamation-triangle" style="color:#f1c40f"></i><div class="num" id="count-qarz">0</div><div class="label">وەسڵی قەرز</div></div>
-        <div class="stat-card"><i class="fa-solid fa-times-circle" style="color:#e67e22"></i><div class="num" id="count-barnakra">0</div><div class="label">وەسڵی بارنەکراو</div></div>
-        <div class="stat-card"><i class="fa-solid fa-chart-line" style="color:#27ae60"></i><div class="num" id="total-week">$0</div><div class="label">فرۆشی هەفتانە</div></div>
-        <div class="stat-card"><i class="fa-solid fa-calendar-alt" style="color:#d35400"></i><div class="num" id="total-day">$0</div><div class="label">فرۆشی ئەمڕۆ</div></div>
-        <div class="stat-card" style="grid-column: span 2;"><i class="fa-solid fa-chart-bar" style="color:#8e44ad"></i><div class="num" id="total-month">$0</div><div class="label">فرۆشی مانگانە</div></div>
-    </div>
+    <table>
+        <thead>
+            <tr><th>کڕیار</th><th>ژمارەی وەسڵ</th><th>کۆی گشتی</th><th>کردار</th></tr>
+        </thead>
+        <tbody id="dashboardBody"></tbody>
+    </table>
+</div>
 
-    <!-- مێنووی خوارەوە -->
-    <div class="menu-footer">
-        <a href="create-receipt.html" class="btn-menu primary">دروستکردنی وەسڵ</a>
-        <a href="all-receipts.html" class="btn-menu">هەموو وەسڵەکان</a>
-        <a href="reports.html" class="btn-menu">ڕاپۆرتەکان</a>
-        <a href="admin.html" class="btn-menu">پانێڵی بەڕێوبەر</a>
-    </div>
+<script>
+    function loadReceipts() {
+        let receipts = JSON.parse(localStorage.getItem('savedReceipts')) || [];
+        let body = document.getElementById('dashboardBody');
+        body.innerHTML = '';
+        
+        receipts.forEach((r, index) => {
+            body.innerHTML += `
+                <tr>
+                    <td>${r.customerName || 'بێ ناو'}</td>
+                    <td>${r.receiptNumber || '-'}</td>
+                    <td>$${r.grandTotal || 0}</td>
+                    <td>
+                        <button onclick="editReceipt(${index})">دەستکاری</button>
+                        <button onclick="deleteReceipt(${index})">سڕینەوە</button>
+                    </td>
+                </tr>
+            `;
+        });
+    }
 
-    <script>
-        function updateDashboard() {
-            let receipts = JSON.parse(localStorage.getItem('savedReceipts')) || [];
-            let now = new Date();
-            let counts = { bar: 0, qarz: 0, barnakra: 0 };
-            let totals = { all: 0, day: 0, week: 0, month: 0 };
+    function editReceipt(index) {
+        localStorage.setItem('editIndex', index);
+        window.location.href = 'create-receipt.html';
+    }
 
-            receipts.forEach(r => {
-                let rDate = new Date(r.date);
-                let amount = parseFloat(r.total) || 0;
+    function deleteReceipt(index) {
+        let receipts = JSON.parse(localStorage.getItem('savedReceipts'));
+        receipts.splice(index, 1);
+        localStorage.setItem('savedReceipts', JSON.stringify(receipts));
+        loadReceipts();
+    }
 
-                if(r.status === 'بارکراو') counts.bar++;
-                else if(r.status === 'قەرز') counts.qarz++;
-                else if(r.status === 'بارنەکراو') counts.barnakra++;
+    loadReceipts();
+</script>
 
-                totals.all += amount;
-                if(rDate.toDateString() === now.toDateString()) totals.day += amount;
-                if(rDate.getMonth() === now.getMonth() && rDate.getFullYear() === now.getFullYear()) totals.month += amount;
-                
-                let weekAgo = new Date(); weekAgo.setDate(now.getDate() - 7);
-                if(rDate >= weekAgo) totals.week += amount;
-            });
-
-            document.getElementById('count-bar').innerText = counts.bar;
-            document.getElementById('count-qarz').innerText = counts.qarz;
-            document.getElementById('count-barnakra').innerText = counts.barnakra;
-            document.getElementById('total-all').innerText = '$' + totals.all.toLocaleString();
-            document.getElementById('total-day').innerText = '$' + totals.day.toLocaleString();
-            document.getElementById('total-week').innerText = '$' + totals.week.toLocaleString();
-            document.getElementById('total-month').innerText = '$' + totals.month.toLocaleString();
-        }
-
-        function logout() { localStorage.removeItem('isLoggedIn'); window.location.replace("index.html"); }
-        document.addEventListener('DOMContentLoaded', updateDashboard);
-    </script>
 </body>
 </html>
