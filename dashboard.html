@@ -10,7 +10,6 @@
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         body { background-color: #f4f6f9; color: #333; padding: 15px; }
         
-        /* ستایلی نوێی بەشی سەرەوە (Header) */
         .header-top { 
             display: flex; 
             justify-content: space-between; 
@@ -25,7 +24,6 @@
             font-size: 18px; 
             font-weight: bold; 
             color: #2c3e50; 
-            font-family: 'Segoe UI', Arial, sans-serif;
         }
         .btn-logout-small { 
             padding: 6px 12px; 
@@ -78,7 +76,7 @@
 </head>
 <body>
 
-    <!-- بەشی سەرەوەی نوێ -->
+    <!-- بەشی سەرەوە -->
     <div class="header-top">
         <div class="company-title">KRD Receipt System</div>
         <button onclick="logout()" class="btn-logout-small">
@@ -95,7 +93,8 @@
         </div>
         <div class="stat-card">
             <i class="fa-solid fa-circle-check c-success"></i>
-            <div class="num">0</div>
+            <!-- لێرە ئایدی لۆدبەرانمان داناوە بۆ ئەوەی ئەژماری بکات -->
+            <div class="num" id="loaded-count">0</div>
             <div class="label">وەسڵی بارکراو</div>
         </div>
         <div class="stat-card">
@@ -140,6 +139,22 @@
     </div>
 
     <script>
+        // کاتێک لاپەڕەکە دەکرێتەوە ژمارەی وەسڵە بارکراوەکان ئەژماردەکات
+        document.addEventListener('DOMContentLoaded', function() {
+            updateDashboardStats();
+        });
+
+        function updateDashboardStats() {
+            // هێنانی وەسڵەکان لە لۆکەڵ ستۆرێج (ئەگەر کلیلەکە ناوی جیاواز بوو بیگۆڕە بۆ کلیلە ڕاستەکەی خۆت وەک 'receipts')
+            let receipts = JSON.parse(localStorage.getItem('receipts')) || [];
+            
+            // فلتەرکردنی وەسڵەکان کە دۆخیان (status) یەکسانە بە "بارکراو" یاخود "loaded"
+            let loadedReceipts = receipts.filter(receipt => receipt.status === 'بارکراو' || receipt.status === 'loaded');
+            
+            // دانانی ژمارەکە لە ناو کارتەکەدا
+            document.getElementById('loaded-count').innerText = loadedReceipts.length;
+        }
+
         function logout() {
             localStorage.removeItem('isLoggedIn');
             window.location.replace("index.html");
