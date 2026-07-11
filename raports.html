@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ku" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>ڕاپۆرتەکان</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f4f6f9; padding: 20px; color: #333; }
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .back-btn { background: #4a5d6e; color: #fff; text-decoration: none; padding: 8px 15px; border-radius: 6px; font-size: 14px; }
+        
+        .report-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 20px; }
+        .report-card { background: #fff; padding: 20px; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); text-align: center; border-right: 5px solid #3498db; }
+        .report-card h3 { margin-bottom: 10px; font-size: 14px; color: #7f8c8d; }
+        .report-card p { font-size: 22px; font-weight: bold; color: #2c3e50; }
+        
+        table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        th { background: #2c3e50; color: #fff; padding: 12px; }
+        td { padding: 10px; border-bottom: 1px solid #eee; text-align: center; }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h2>ڕاپۆرتی ورد</h2>
+        <a href="dashboard.html" class="back-btn">گەڕانەوە</a>
+    </div>
+
+    <div class="report-grid">
+        <div class="report-card"><h3>کۆی گشتی فرۆش</h3><p id="total-sales">$0</p></div>
+        <div class="report-card"><h3>ژمارەی وەسڵەکان</h3><p id="total-count">0</p></div>
+        <div class="report-card"><h3>کۆی قەرز</h3><p id="total-debt">$0</p></div>
+    </div>
+
+    <table>
+        <thead>
+            <tr><th>ڕێکەوت</th><th>کڕیار</th><th>بڕ</th><th>دۆخ</th></tr>
+        </thead>
+        <tbody id="reportsBody"></tbody>
+    </table>
+
+    <script>
+        function loadReports() {
+            let receipts = JSON.parse(localStorage.getItem('savedReceipts')) || [];
+            let body = document.getElementById('reportsBody');
+            let totalSales = 0;
+            let totalDebt = 0;
+            body.innerHTML = '';
+
+            receipts.forEach(r => {
+                let amount = parseFloat(r.total) || 0;
+                if(r.status === 'قەرز') totalDebt += amount;
+                else totalSales += amount;
+
+                body.innerHTML += `
+                    <tr>
+                        <td>${new Date(r.date).toLocaleDateString('ku')}</td>
+                        <td>${r.name}</td>
+                        <td>$${amount.toLocaleString()}</td>
+                        <td>${r.status}</td>
+                    </tr>
+                `;
+            });
+
+            document.getElementById('total-sales').innerText = '$' + totalSales.toLocaleString();
+            document.getElementById('total-debt').innerText = '$' + totalDebt.toLocaleString();
+            document.getElementById('total-count').innerText = receipts.length;
+        }
+
+        loadReports();
+    </script>
+</body>
+</html>
