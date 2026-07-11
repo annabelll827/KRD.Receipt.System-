@@ -1,7 +1,8 @@
 <!DOCTYPE html>
-<html lang="ku" dir="rtl">
+<html lang="ku" dir="rtl" class="notranslate">
 <head>
     <meta charset="UTF-8">
+    <meta name="google" content="notranslate"> <!-- ئەم دێڕە ڕێگری لە گۆگڵ دەکات دیزاینەکە تێکبدات -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>داشبۆرد | KRD Receipt System</title>
     <!-- بەستنەوەی ئایکۆنەکان -->
@@ -53,7 +54,7 @@
             margin-bottom: 30px;
         }
 
-        /* ستایلی دوگمەکانی مێنوو ڕێک وەک کۆنەکە */
+        /* ستایلی دوگمەکانی مێنوو بە جێگیری */
         .menu-buttons {
             display: flex;
             flex-direction: column;
@@ -61,8 +62,10 @@
         }
 
         .btn-menu {
-            display: block;
-            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
             padding: 15px;
             background-color: #bdc3c7;
             border: none;
@@ -72,16 +75,11 @@
             font-weight: bold;
             text-decoration: none;
             cursor: pointer;
-            text-align: center;
             transition: background 0.2s;
         }
 
         .btn-menu:hover {
             background-color: #a6b0b5;
-        }
-
-        .btn-menu i {
-            margin-left: 8px;
         }
 
         /* دوگمەی چوونە دەرەوە */
@@ -112,18 +110,18 @@
             
             <a href="create-receipt.html" class="btn-menu">
                 <i class="fa-solid fa-file-circle-plus"></i>
-                دروستکردنی وەسڵی نوێ
+                <span>دروستکردنی وەسڵی نوێ</span>
             </a>
 
             <a href="all-receipts.html" class="btn-menu">
                 <i class="fa-solid fa-folder-open"></i>
-                هەموو وەسڵەکان
+                <span>هەموو وەسڵەکان</span>
             </a>
 
             <!-- دوگمەی چوونەدەرەوە -->
             <button onclick="logout()" class="btn-menu btn-logout">
                 <i class="fa-solid fa-right-from-bracket"></i>
-                چوونەدەرەوە لە سیستەم
+                <span>چوونەدەرەوە لە سیستەم</span>
             </button>
 
         </div>
@@ -131,7 +129,6 @@
     </div>
 
     <script>
-        // فەرمانی چوونەدەرەوە و گەڕانەوە بۆ لاپەڕەی سەرەکی
         function logout() {
             localStorage.removeItem('isLoggedIn');
             window.location.replace("index.html");
