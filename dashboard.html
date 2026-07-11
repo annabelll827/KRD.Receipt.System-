@@ -10,7 +10,6 @@
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         body { background-color: #f4f6f9; color: #333; padding: 15px; }
         
-        /* بەشی سەرەوە (Header) */
         .header-top { 
             display: flex; 
             justify-content: space-between; 
@@ -21,11 +20,7 @@
             box-shadow: 0 2px 5px rgba(0,0,0,0.05); 
             margin-bottom: 20px; 
         }
-        .company-title { 
-            font-size: 18px; 
-            font-weight: bold; 
-            color: #2c3e50; 
-        }
+        .company-title { font-size: 18px; font-weight: bold; color: #2c3e50; }
         .btn-logout-small { 
             padding: 6px 12px; 
             border-radius: 5px; 
@@ -40,12 +35,8 @@
             gap: 6px; 
             transition: all 0.2s ease;
         }
-        .btn-logout-small:hover { 
-            background-color: #e74c3c; 
-            color: #fff; 
-        }
+        .btn-logout-small:hover { background-color: #e74c3c; color: #fff; }
 
-        /* کارتەکانی سەرەوە */
         .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 15px; }
         .stats-grid-bottom { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 25px; max-width: 75%; margin-right: auto; margin-left: auto; }
         
@@ -59,7 +50,6 @@
         .c-warning { color: #e67e22; }
         .c-danger { color: #f1c40f; }
 
-        /* بەشی دوگمەکان */
         .menu-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 12px; }
         .menu-grid-bottom { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
         
@@ -77,7 +67,6 @@
 </head>
 <body>
 
-    <!-- بەشی سەرەوە -->
     <div class="header-top">
         <div class="company-title">KRD Receipt System</div>
         <button onclick="logout()" class="btn-logout-small">
@@ -85,7 +74,6 @@
         </button>
     </div>
 
-    <!-- کارتەکانی ڕاپۆرت (ڕیزی یەکەم) -->
     <div class="stats-grid">
         <div class="stat-card">
             <i class="fa-solid fa-dollar-sign c-total"></i>
@@ -109,7 +97,6 @@
         </div>
     </div>
 
-    <!-- کارتەکانی ڕاپۆرت (ڕیزی دووەم) -->
     <div class="stats-grid-bottom">
         <div class="stat-card">
             <i class="fa-solid fa-calendar-days c-total"></i>
@@ -128,7 +115,6 @@
         </div>
     </div>
 
-    <!-- دوگمەکانی مێنووی سەرەکی -->
     <div class="menu-grid">
         <a href="create-receipt.html" class="btn-action primary"><i class="fa-solid fa-plus"></i> دروستکردنی وەسڵ</a>
         <a href="all-receipts.html" class="btn-action"><i class="fa-solid fa-folder-open"></i> هەموو وەسڵەکان</a>
@@ -144,32 +130,22 @@
         });
 
         function updateDashboardStats() {
-            // گەڕان بەدوای داتاکان بە چەندین ناوی جیاواز کە ڕەنگە پڕۆژەکەت بەکاری هێنابێت
-            let keys = ['receipts', 'allReceipts', 'receiptData', 'items', 'invoices'];
-            let rawData = null;
-
-            for (let key of keys) {
-                let data = localStorage.getItem(key);
-                if (data) {
-                    rawData = data;
-                    break;
-                }
-            }
-            
+            // دەخوێنێتەوە لە 'savedReceipts' کە لە لاپەڕەی دروستکردنی وەسڵ پاشەکەوت دەکرێت
+            let rawData = localStorage.getItem('savedReceipts');
             let receipts = [];
+            
             if (rawData) {
                 try {
                     receipts = JSON.parse(rawData);
                 } catch (e) {
-                    console.error(e);
+                    console.error("Error:", e);
                 }
             }
             
             if (Array.isArray(receipts)) {
-                // ئەگەر وەسڵەکان بە هەر شێوازێک پاشەکەوت کرابن، لێرەدا ژمارەکەیان دادەنێت
-                document.getElementById('loaded-count').innerText = receipts.length;
-            } else {
-                document.getElementById('loaded-count').innerText = "0";
+                // تەنها ئەو وەسڵانە دەژمێرێت کە statusـیان "بارکراو"ە
+                let loadedReceipts = receipts.filter(receipt => receipt.status === 'بارکراو');
+                document.getElementById('loaded-count').innerText = loadedReceipts.length;
             }
         }
 
