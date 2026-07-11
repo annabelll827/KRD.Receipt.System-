@@ -360,7 +360,7 @@
             }
         }
 
-        // axuandnib کۆی گشتی یەک کاڵا
+        // حیسابکردنی کۆی گشتی یەک کاڵا
         function calculateItemTotal(id) {
             const card = document.getElementById(`itemCard_${id}`);
             const price = parseFloat(card.querySelector('.item-price').value) || 0;
@@ -407,7 +407,9 @@
             localStorage.setItem('savedReceipts', JSON.stringify(existingReceipts));
 
             alert('وەسڵەکە بە سەرکەوتوویی تۆمارکرا!');
-            window.location.href = "all-receipts.html";
+            
+            // بەکارهێنانی ڕێگایەکی جێگیرتر بۆ ناردنی بەکارهێنەر لەسەر گیتهەب
+            window.location.replace("all-receipts.html");
         });
     </script>
 
