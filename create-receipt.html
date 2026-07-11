@@ -4,29 +4,38 @@
     <meta charset="UTF-8">
     <title>دروستکردن یان ئیدیتکردنی وەسڵ</title>
     <style>
-        body { font-family: sans-serif; padding: 20px; background: #f4f6f9; }
-        input { width: 100%; padding: 10px; margin: 10px 0; display: block; }
-        .btn { padding: 10px 20px; cursor: pointer; border: none; background: #e91e63; color: white; border-radius: 5px; }
+        body { font-family: 'Segoe UI', sans-serif; padding: 20px; background: #f4f6f9; }
+        .container { max-width: 400px; margin: 0 auto; background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        input, select { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ddd; border-radius: 5px; box-sizing: border-box; }
+        .btn { width: 100%; padding: 12px; cursor: pointer; border: none; background: #e91e63; color: white; border-radius: 5px; font-weight: bold; }
+        .back-link { display: block; text-align: center; margin-top: 15px; text-decoration: none; color: #666; }
     </style>
 </head>
 <body>
 
-    <h2>وەسڵ</h2>
+<div class="container">
+    <h2 id="formTitle">وەسڵ</h2>
     <input type="text" id="customerName" placeholder="ناوی کڕیار">
     <input type="number" id="total" placeholder="کۆی گشتی">
+    <select id="status">
+        <option value="بارکراو">بارکراو</option>
+        <option value="قەرز">قەرز</option>
+        <option value="بارنەکراو">بارنەکراو</option>
+    </select>
     <button class="btn" onclick="saveReceipt()">پاشەکەوتکردن</button>
-    <br><br>
-    <a href="dashboard.html">گەڕانەوە</a>
+    <a href="dashboard.html" class="back-link">گەڕانەوە</a>
+</div>
 
     <script>
-        // کاتێک لاپەڕەکە دەکرێتەوە، بزانە ئایا ئیدیتە یان نوێیە
         document.addEventListener('DOMContentLoaded', () => {
             let editIndex = localStorage.getItem('editIndex');
             if (editIndex !== null) {
+                document.getElementById('formTitle').innerText = "دەستکاری وەسڵ";
                 let receipts = JSON.parse(localStorage.getItem('savedReceipts'));
                 let r = receipts[editIndex];
                 document.getElementById('customerName').value = r.name;
                 document.getElementById('total').value = r.total;
+                document.getElementById('status').value = r.status;
             }
         });
 
@@ -37,16 +46,14 @@
             let newReceipt = {
                 name: document.getElementById('customerName').value,
                 total: document.getElementById('total').value,
-                status: 'بارکراو',
-                date: new Date().toISOString()
+                status: document.getElementById('status').value, // زیادکردنی دۆخ
+                date: editIndex !== null ? receipts[editIndex].date : new Date().toISOString()
             };
 
             if (editIndex !== null) {
-                // ئەگەر ئیدیت بوو، بە جێگەی پێشوودا دایبنێ
                 receipts[editIndex] = newReceipt;
                 localStorage.removeItem('editIndex');
             } else {
-                // ئەگەر وەسڵی نوێ بوو
                 receipts.push(newReceipt);
             }
             
