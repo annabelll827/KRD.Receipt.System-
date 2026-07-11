@@ -4,137 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>چوونەژوورەوە | ROMA STONE</title>
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        body {
-            /* لێرەدا دەتوانیت وێنەی باکگراوندی مەڕمەڕەکە دابنێیت */
-            background: url('https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?q=80&w=1920') no-repeat center center fixed;
-            background-size: cover;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .login-container {
-            background-color: #ffffff;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
-            width: 100%;
-            max-width: 400px;
-            text-align: center;
-        }
-
-        .logo-area img {
-            width: 70px;
-            height: auto;
-            margin-bottom: 10px;
-        }
-
-        .brand-name {
-            font-size: 24px;
-            font-weight: bold;
-            color: #111;
-            letter-spacing: 0.5px;
-            margin-bottom: 5px;
-        }
-
-        .subtitle {
-            font-size: 14px;
-            color: #666;
-            margin-bottom: 20px;
-            border-bottom: 1px solid #eee;
-            padding-bottom: 15px;
-        }
-
-        .input-group {
-            margin-bottom: 15px;
-            text-align: right;
-        }
-
-        .input-group label {
-            display: block;
-            font-size: 12px;
-            color: #777;
-            margin-bottom: 5px;
-            padding-right: 5px;
-        }
-
-        .input-group input {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #dcdcdc;
-            border-radius: 6px;
-            background-color: #f0f4f9;
-            font-size: 14px;
-            outline: none;
-            transition: border-color 0.2s;
-        }
-
-        .input-group input:focus {
-            border-color: #e91e63;
-            background-color: #fff;
-        }
-
-        .btn-login {
-            width: 100%;
-            padding: 14px;
-            background-color: #e91e63;
-            color: white;
-            border: none;
-            border-radius: 6px;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 8px;
-            margin-top: 20px;
-            transition: background 0.2s;
-        }
-
-        .btn-login:hover {
-            background-color: #d81b60;
-        }
-
-        /* دروستکردنی ئایکۆنی دەرگا بە CSS */
-        .login-icon {
-            display: inline-block;
-            width: 16px;
-            height: 16px;
-            border: 2px solid currentColor;
-            border-left: none;
-            position: relative;
-        }
-        .login-icon::before {
-            content: '→';
-            position: absolute;
-            left: -6px;
-            top: -7px;
-            font-size: 14px;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
     <div class="login-container">
-        <!-- بەشی لۆگۆ و ناوی کارگە -->
         <div class="logo-area">
-            <!-- لێرەدا ناوی فایلی لۆگۆکەت دابنێ -->
             <img src="https://cdn-icons-png.flaticon.com/512/2164/2164832.png" alt="Colosseum Logo">
             <div class="brand-name">ROMA STONE</div>
             <div class="subtitle">کارگەی ڕۆما</div>
         </div>
 
-        <!-- فۆرمی چوونەژوورەوەی ئەدمین -->
         <form action="login.php" method="POST">
             <div class="input-group">
                 <label for="username">ناوی بەکارهێنەر</label>
