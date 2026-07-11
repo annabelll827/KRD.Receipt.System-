@@ -13,7 +13,7 @@
         }
 
         body {
-            /* لێرەدا دەتوانیت وێنەی باکگراوندەکەت دابنێیت */
+            /* لێرەدا دەتوانیت وێنەی باکگراوندی مەڕمەڕەکە دابنێیت */
             background: url('https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?q=80&w=1920') no-repeat center center fixed;
             background-size: cover;
             height: 100vh;
@@ -86,7 +86,7 @@
         .btn-login {
             width: 100%;
             padding: 14px;
-            background-color: #e91e63; /* ئەو ڕەنگە پەمەیی/سوورەی ناو وێنەکە */
+            background-color: #e91e63;
             color: white;
             border: none;
             border-radius: 6px;
@@ -105,7 +105,7 @@
             background-color: #d81b60;
         }
 
-        /* ئایکۆنی دەرگا/چوونەژوورەوە */
+        /* دروستکردنی ئایکۆنی دەرگا بە CSS */
         .login-icon {
             display: inline-block;
             width: 16px;
@@ -126,24 +126,24 @@
 <body>
 
     <div class="login-container">
-        <!-- بەشی لۆگۆ -->
+        <!-- بەشی لۆگۆ و ناوی کارگە -->
         <div class="logo-area">
-            <!-- دەتوانیت لینکی وێنەی کۆلۆسیۆمەکە لێرە دابنێیت -->
+            <!-- لێرەدا ناوی فایلی لۆگۆکەت دابنێ -->
             <img src="https://cdn-icons-png.flaticon.com/512/2164/2164832.png" alt="Colosseum Logo">
             <div class="brand-name">ROMA STONE</div>
             <div class="subtitle">کارگەی ڕۆما</div>
         </div>
 
-        <!-- فۆرمی چوونەژوورەوە -->
-        <form>
+        <!-- فۆرمی چوونەژوورەوەی ئەدمین -->
+        <form action="login.php" method="POST">
             <div class="input-group">
                 <label for="username">ناوی بەکارهێنەر</label>
-                <input type="text" id="username" placeholder="harem" required>
+                <input type="text" id="username" name="username" placeholder="harem" required>
             </div>
 
             <div class="input-group">
                 <label for="password">وشەی نهێنی</label>
-                <input type="password" id="password" placeholder="....." required>
+                <input type="password" id="password" name="password" placeholder="....." required>
             </div>
 
             <button type="submit" class="btn-login">
