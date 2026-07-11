@@ -1,1 +1,255 @@
+<!DOCTYPE html>
+<html lang="ku" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>پنێڵی بەڕێوەبردن | KRD Receipt System</title>
+    <!-- بەستنەوەی ئایکۆنەکان -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
 
+        body {
+            background-color: #f4f6f9;
+            color: #333;
+            padding: 20px;
+        }
+
+        .dashboard-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            padding: 20px;
+        }
+
+        /* بەشی سەرەوە (Header) */
+        .header-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #f0f0f0;
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+        }
+
+        .system-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .system-info img {
+            width: 45px;
+            height: auto;
+        }
+
+        .system-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #111;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .btn-status {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            color: white;
+            border: none;
+        }
+        .btn-green { background-color: #2ecc71; }
+        .btn-purple { background-color: #9b59b6; }
+
+        .btn-logout {
+            background-color: #111;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        /* بەشی کارتەکان (Stats Grid) */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .stat-card {
+            background: #fff;
+            border: 1px solid #eef0f2;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+        }
+
+        .stat-card i {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+        
+        /* ڕەنگی ئایکۆنەکان بەپێی وێنەکە */
+        .icon-pink { color: #e91e63; }
+        .icon-green { color: #2ecc71; }
+        .icon-dark { color: #2c3e50; }
+        .icon-orange { color: #f39c12; }
+
+        .stat-value {
+            font-size: 22px;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #111;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: #777;
+        }
+
+        /* بەشی دوگمەکانی خوارەوە (Action Buttons Grid) */
+        .actions-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+
+        .btn-action {
+            padding: 15px;
+            font-size: 14px;
+            font-weight: bold;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            transition: background 0.2s;
+        }
+
+        .btn-pink-action {
+            background-color: #e91e63;
+            color: white;
+        }
+        .btn-pink-action:hover { background-color: #d81b60; }
+
+        .btn-gray-action {
+            background-color: #bdc3c7;
+            color: #2c3e50;
+        }
+        .btn-gray-action:hover { background-color: #a6b0b5; }
+
+        /* گونجاندن بۆ شاشەی مۆبایل */
+        @media (max-width: 768px) {
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .actions-grid { grid-template-columns: 1fr; }
+            .header-bar { flex-direction: column; gap: 15px; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="dashboard-container">
+        
+        <!-- سەرپەڕە (Header) -->
+        <div class="header-bar">
+            <div class="system-info">
+                <img src="https://cdn-icons-png.flaticon.com/512/2721/2721291.png" alt="Logo">
+                <div class="system-title">KRD Receipt System</div>
+            </div>
+            
+            <div class="header-actions">
+                <button class="btn-status btn-green"><i class="fa-solid fa-circle-check"></i> سەرەکی</button>
+                <button class="btn-status btn-purple"><i class="fa-solid fa-plus"></i> کۆمپانیا</button>
+                <a href="index.html" class="btn-logout">
+                    <i class="fa-solid fa-right-from-bracket"></i> دەرچوون لە سیستم
+                </a>
+            </div>
+        </div>
+
+        <!-- کارتەکانی زانیاری (خولی یەکەم و دووەمی ناو وێنەکە) -->
+        <div class="stats-grid">
+            <!-- کارتی ١ -->
+            <div class="stat-card">
+                <i class="fa-solid fa-dollar-sign icon-pink"></i>
+                <div class="stat-value">$0</div>
+                <div class="stat-label">کۆی گشتی</div>
+            </div>
+            <!-- کارتی ٢ -->
+            <div class="stat-card">
+                <i class="fa-solid fa-circle-check icon-green"></i>
+                <div class="stat-value">0</div>
+                <div class="stat-label">وەسڵی پارەدراو</div>
+            </div>
+            <!-- کارتی ٣ -->
+            <div class="stat-card">
+                <i class="fa-solid fa-circle-xmark icon-dark"></i>
+                <div class="stat-value">0</div>
+                <div class="stat-label">وەسڵی بارنەکراو</div>
+            </div>
+            <!-- کارتی ٤ -->
+            <div class="stat-card">
+                <i class="fa-solid fa-circle-exclamation icon-orange"></i>
+                <div class="stat-value">0</div>
+                <div class="stat-label">وەسڵی قەرز</div>
+            </div>
+            
+            <!-- کارتی ٥ -->
+            <div class="stat-card">
+                <i class="fa-solid fa-calendar-days icon-pink"></i>
+                <div class="stat-value">$0</div>
+                <div class="stat-label">فرۆشی ئەمڕۆ</div>
+            </div>
+            <!-- کارتی ٦ -->
+            <div class="stat-card">
+                <i class="fa-solid fa-chart-line icon-pink"></i>
+                <div class="stat-value">$0</div>
+                <div class="stat-label">فرۆشی هەفتانە</div>
+            </div>
+            <!-- کارتی ٧ -->
+            <div class="stat-card">
+                <i class="fa-solid fa-chart-bar icon-pink"></i>
+                <div class="stat-value">$0</div>
+                <div class="stat-label">فرۆشی مانگانە</div>
+            </div>
+            <!-- لێرەدا کارتی هەشتەم لە وێنەکەدا بەتاڵە بۆیە لێرەش بەتاڵمان هێشتووەتەوە -->
+            <div class="stat-card" style="visibility: hidden;"></div>
+        </div>
+
+        <!-- دوگمەکانی بەڕێوەبردن (خوارەوە) -->
+        <div class="actions-grid">
+            <!-- ڕیزی یەکەم -->
+            <button class="btn-action btn-pink-action"><i class="fa-solid fa-plus"></i> دروستکردنی وەسڵ</button>
+            <button class="btn-action btn-gray-action"><i class="fa-solid fa-list"></i> هەموو وەسڵەکان</button>
+            <button class="btn-action btn-gray-action"><i class="fa-solid fa-boxes-stacked"></i> سندوقی بارگاویکردنەکان</button>
+            
+            <!-- ڕیزی دووەم -->
+            <button class="btn-action btn-gray-action"><i class="fa-solid fa-rotate-left"></i> گەڕانەوە بۆ حاڵەتی پاشەکەوت</button>
+            <button class="btn-action btn-gray-action"><i class="fa-solid fa-print"></i> کۆپی ڕاپۆرتەکان</button>
+            <button class="btn-action btn-gray-action"><i class="fa-solid fa-user-gear"></i> پنێڵی بەڕێوەبەر</button>
+        </div>
+
+    </div>
+
+</body>
+</html>
