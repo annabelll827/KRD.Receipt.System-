@@ -4,83 +4,21 @@
     <meta charset="UTF-8">
     <title>دروستکردنی وەسڵ</title>
     <style>
-        body { font-family: sans-serif; background: #f4f6f9; padding: 20px; }
-        .container { width: 95%; max-width: 900px; margin: auto; background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-        .row { display: flex; gap: 15px; margin-bottom: 10px; }
+        body { background: #f4f6f9; padding: 20px; font-family: sans-serif; }
+        .card { max-width: 800px; margin: auto; background: white; padding: 20px; border-radius: 10px; }
+        .row { display: flex; gap: 20px; margin-bottom: 15px; }
         .col { flex: 1; }
-        input, select, textarea { width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
-        .btn { padding: 10px; border: none; border-radius: 4px; cursor: pointer; color: #fff; }
-        .add-btn { background: #2c3e50; width: 100%; margin: 15px 0; }
-        .save-btn { background: #e91e63; width: 100%; padding: 15px; font-size: 16px; margin-top: 20px; }
-        .item-box { border: 1px solid #ddd; padding: 15px; margin-bottom: 15px; position: relative; }
+        input { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; }
+        .btn-save { background: #e91e63; color: white; width: 100%; padding: 15px; border: none; cursor: pointer; }
     </style>
 </head>
 <body>
-
-<div class="container">
+<div class="card">
     <h3>دروستکردنی وەسڵ</h3>
-    <div class="row">
-        <div class="col"><label>ناوی کڕیار</label><input type="text" id="customerName"></div>
-        <div class="col"><label>ژمارەی مۆبایل</label><input type="text" id="phone"></div>
-    </div>
-    <label>تێبینییەکان</label><textarea id="notes" rows="2"></textarea>
-    <div class="row">
-        <div class="col"><label>ژمارەی وەسڵ</label><input type="text" id="receiptNumber"></div>
-        <div class="col"><label>بەروار</label><input type="date" id="date"></div>
-    </div>
-
-    <button class="btn add-btn" onclick="addItem()">+ زیادکردنی کاڵا</button>
-    <div id="itemsContainer"></div>
-
-    <label>بڕی داشکاندن</label><input type="number" id="discount" value="0" oninput="calculateGrandTotal()">
-    <label>کۆی گشتی</label><input type="number" id="grandTotal" readonly>
-    <button class="btn save-btn" onclick="saveReceipt()">تۆمارکردن</button>
+    <div class="row"><div class="col"><label>ناوی کڕیار</label><input type="text"></div><div class="col"><label>ژمارەی تەلەفۆن</label><input type="text"></div></div>
+    <label>جۆری پارەدان:</label><br>
+    <input type="radio" name="pay"> قەرز <input type="radio" name="pay"> پارەنەدراو <input type="radio" name="pay"> پارەدراو
+    <button class="btn-save" style="margin-top:20px;" onclick="location.href='dashboard.html'">پاشەکەوتکردن</button>
 </div>
-
-<script>
-    function addItem() {
-        let div = document.createElement('div');
-        div.className = 'item-box';
-        div.innerHTML = `
-            <label>ناوی کاڵا</label><input type="text" class="itemName">
-            <label>دۆخ</label><select class="itemStatus"><option>قەرز</option><option>پارەنەدراو</option><option>پارەدراو</option></select>
-            <div class="row">
-                <div class="col"><label>ژمارە</label><input type="number" class="itemQty" oninput="calculateItemTotal(this)"></div>
-                <div class="col"><label>نرخ</label><input type="number" class="itemPrice" oninput="calculateItemTotal(this)"></div>
-                <div class="col"><label>کۆی گشتی</label><input type="number" class="itemTotal" readonly></div>
-            </div>
-            <button class="btn" style="background:#e74c3c" onclick="this.parentElement.remove(); calculateGrandTotal()">سڕینەوە</button>
-        `;
-        document.getElementById('itemsContainer').appendChild(div);
-    }
-
-    function calculateItemTotal(el) {
-        let parent = el.closest('.item-box');
-        let qty = parent.querySelector('.itemQty').value || 0;
-        let price = parent.querySelector('.itemPrice').value || 0;
-        parent.querySelector('.itemTotal').value = qty * price;
-        calculateGrandTotal();
-    }
-
-    function calculateGrandTotal() {
-        let totals = document.querySelectorAll('.itemTotal');
-        let sum = 0;
-        totals.forEach(t => sum += parseFloat(t.value) || 0);
-        let discount = parseFloat(document.getElementById('discount').value) || 0;
-        document.getElementById('grandTotal').value = sum - discount;
-    }
-
-    function saveReceipt() {
-        let receipt = {
-            customerName: document.getElementById('customerName').value,
-            receiptNumber: document.getElementById('receiptNumber').value,
-            grandTotal: document.getElementById('grandTotal').value
-        };
-        let receipts = JSON.parse(localStorage.getItem('savedReceipts')) || [];
-        receipts.push(receipt);
-        localStorage.setItem('savedReceipts', JSON.stringify(receipts));
-        window.location.href = 'dashboard.html';
-    }
-</script>
 </body>
 </html>
