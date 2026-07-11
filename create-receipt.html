@@ -4,56 +4,71 @@
     <meta charset="UTF-8">
     <title>دروستکردنی وەسڵ</title>
     <style>
-        body { font-family: sans-serif; background-color: #f8f9fa; padding: 20px; }
-        .container { max-width: 500px; margin: auto; background: #fff; padding: 20px; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
-        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
-        .back-btn { background: #ced4da; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; }
-        label { display: block; margin: 15px 0 5px; color: #555; font-size: 14px; }
-        input, textarea { width: 100%; padding: 12px; border: 1px solid #dee2e6; border-radius: 6px; box-sizing: border-box; }
-        .add-item-btn { width: 100%; background: #2c3e50; color: #fff; padding: 12px; border: none; border-radius: 6px; margin-top: 20px; cursor: pointer; }
-        .item-card { border: 1px solid #eee; padding: 15px; border-radius: 8px; margin-top: 15px; position: relative; }
-        .del-icon { color: red; cursor: pointer; position: absolute; left: 10px; top: 10px; }
+        body { font-family: sans-serif; background-color: #f0f2f5; padding: 20px; }
+        .container { max-width: 600px; margin: auto; background: #fff; padding: 20px; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .row { display: flex; gap: 10px; margin-bottom: 10px; }
+        .col { flex: 1; }
+        label { display: block; margin: 10px 0 5px; font-size: 13px; color: #555; }
+        input, textarea, select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; }
+        .item-card { border: 2px solid #e9ecef; padding: 15px; border-radius: 10px; margin-top: 15px; background: #fafafa; }
+        .add-btn { width: 100%; background: #2c3e50; color: #fff; padding: 12px; border: none; border-radius: 6px; margin-top: 10px; cursor: pointer; }
+        .save-btn { width: 100%; background: #e91e63; color: #fff; padding: 15px; border: none; border-radius: 6px; margin-top: 20px; font-size: 16px; cursor: pointer; }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <div class="header">
-        <button class="back-btn" onclick="window.history.back()">گەڕانەوە</button>
-        <h2>دروستکردنی وەسڵ 🧾</h2>
+    <h2>دروستکردنی وەسڵ</h2>
+    
+    <!-- ناوی کڕیار و مۆبایل -->
+    <div class="row">
+        <div class="col"><label>ناوی کڕیار</label><input type="text" id="name"></div>
+        <div class="col"><label>ژمارەی مۆبایل</label><input type="text" id="phone"></div>
     </div>
 
-    <label>ناوی کڕیار</label>
-    <input type="text" id="customerName">
-
-    <label>ژمارەی مۆبایل</label>
-    <input type="text" id="phone">
-
+    <!-- تێبینی -->
     <label>تێبینییەکان</label>
-    <textarea id="notes" rows="3"></textarea>
+    <textarea id="notes" rows="2"></textarea>
 
-    <label>ژمارەی وەسڵ</label>
-    <input type="text" id="receiptNumber">
+    <!-- وەسڵ و بەروار -->
+    <div class="row">
+        <div class="col"><label>ژمارەی وەسڵ</label><input type="text" id="receiptNum"></div>
+        <div class="col"><label>بەروار</label><input type="date" id="date"></div>
+    </div>
 
-    <label>بەروار</label>
-    <input type="date" id="date">
-
-    <button class="add-item-btn" onclick="addItem()">+ زیادکردنی کاڵا</button>
-
+    <button class="add-btn" onclick="addItem()">+ زیادکردنی کاڵا</button>
     <div id="itemsContainer"></div>
+
+    <label>بڕی داشکاندن</label>
+    <input type="number" id="discount" placeholder="0">
+    
+    <label>کۆی گشتی</label>
+    <input type="number" id="grandTotal" readonly>
+
+    <button class="save-btn" onclick="saveReceipt()">تۆمارکردن</button>
 </div>
 
 <script>
     function addItem() {
-        let container = document.getElementById('itemsContainer');
         let div = document.createElement('div');
         div.className = 'item-card';
         div.innerHTML = `
-            <span class="del-icon" onclick="this.parentElement.remove()">🗑️</span>
-            <label>ناوی کاڵا</label>
-            <input type="text" class="itemName">
+            <label>ناوی کاڵا</label><input type="text" class="itemName">
+            <label>دۆخ</label>
+            <select class="itemStatus">
+                <option>قەرز</option><option>پارەنەدراو</option><option>پارەدراو</option>
+            </select>
+            <div class="row">
+                <div class="col"><label>ژمارە</label><input type="number" class="itemQty"></div>
+                <div class="col"><label>نرخ</label><input type="number" class="itemPrice"></div>
+                <div class="col"><label>کۆی گشتی</label><input type="number" class="itemTotal" readonly></div>
+            </div>
         `;
-        container.appendChild(div);
+        document.getElementById('itemsContainer').appendChild(div);
+    }
+
+    function saveReceipt() {
+        alert("وەسڵەکە بە سەرکەوتوویی تۆمارکرا!");
     }
 </script>
 
