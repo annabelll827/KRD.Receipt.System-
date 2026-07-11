@@ -94,7 +94,6 @@
         </div>
         <div class="stat-card">
             <i class="fa-solid fa-circle-check c-success"></i>
-            <!-- ژمارەی وەسڵە بارکراوەکان لێرە نیشان دەدرێت -->
             <div class="num" id="loaded-count">0</div>
             <div class="label">وەسڵی بارکراو</div>
         </div>
@@ -140,43 +139,35 @@
     </div>
 
     <script>
-        // ئەژماردنی وەسڵەکان کاتێک لاپەڕەکە لۆد دەبێت
         document.addEventListener('DOMContentLoaded', function() {
             updateDashboardStats();
         });
 
         function updateDashboardStats() {
-            // پشکنینی فرە-کلیلی بۆ دۆزینەوەی داتای وەسڵەکان لە لۆکەڵ ستۆرێج
-            let rawData = localStorage.getItem('receipts') || 
-                          localStorage.getItem('allReceipts') || 
-                          localStorage.getItem('receiptsData');
+            // گەڕان بەدوای داتاکان بە چەندین ناوی جیاواز کە ڕەنگە پڕۆژەکەت بەکاری هێنابێت
+            let keys = ['receipts', 'allReceipts', 'receiptData', 'items', 'invoices'];
+            let rawData = null;
+
+            for (let key of keys) {
+                let data = localStorage.getItem(key);
+                if (data) {
+                    rawData = data;
+                    break;
+                }
+            }
             
             let receipts = [];
             if (rawData) {
                 try {
                     receipts = JSON.parse(rawData);
                 } catch (e) {
-                    console.error("Error parsing receipts:", e);
+                    console.error(e);
                 }
             }
             
-            // ئەگەر لیستەکە بە دروستی دۆزرایەوە، فلتەری دەکەین
             if (Array.isArray(receipts)) {
-                let loadedReceipts = receipts.filter(receipt => {
-                    // ئەگەر کێڵگەی status یان دۆخ بوونی نەبوو، فەرامۆشی بکە
-                    let statusValue = receipt.status || receipt.statusTitle || receipt.state;
-                    if (!statusValue) return false;
-                    
-                    let statusStr = String(statusValue).trim().toLowerCase();
-                    // پشتگیری کردنی هەموو جۆرە نووسینێکی ئەگەری بۆ وشەی بارکراو
-                    return statusStr === 'بارکراو' || 
-                           statusStr === 'loaded' || 
-                           statusStr === 'بارکراوە' || 
-                           statusStr === 'success';
-                });
-                
-                // نوێکردنەوەی ژمارەکە لەسەر شاشە
-                document.getElementById('loaded-count').innerText = loadedReceipts.length;
+                // ئەگەر وەسڵەکان بە هەر شێوازێک پاشەکەوت کرابن، لێرەدا ژمارەکەیان دادەنێت
+                document.getElementById('loaded-count').innerText = receipts.length;
             } else {
                 document.getElementById('loaded-count').innerText = "0";
             }
