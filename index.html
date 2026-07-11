@@ -3,27 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>چوونەژوورەوە | ROMA STONE</title>
+    <title>چوونەژوورەوە | KRD Receipt System</title>
+    <!-- بەستنەوەی فایلی ستایلەکە -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
     <div class="login-container">
+        <!-- بەشی لۆگۆ و ناوی نوێی سیستم -->
         <div class="logo-area">
-            <img src="https://cdn-icons-png.flaticon.com/512/2164/2164832.png" alt="Colosseum Logo">
-            <div class="brand-name">ROMA STONE</div>
-            <div class="subtitle">کارگەی ڕۆما</div>
+            <!-- ئایکۆنێکی سادەی گونجاو بۆ سیستمەکە -->
+            <img src="https://cdn-icons-png.flaticon.com/512/2721/2721291.png" alt="System Logo">
+            <div class="brand-name">KRD Receipt System</div>
         </div>
 
+        <!-- فۆرمی چوونەژوورەوە -->
         <form action="login.php" method="POST">
             <div class="input-group">
                 <label for="username">ناوی بەکارهێنەر</label>
-                <input type="text" id="username" name="username" placeholder="harem" required>
+                <!-- لێرەدا placeholder لابراوە -->
+                <input type="text" id="username" name="username" required>
             </div>
 
             <div class="input-group">
                 <label for="password">وشەی نهێنی</label>
-                <input type="password" id="password" name="password" placeholder="....." required>
+                <!-- لێرەدا placeholder لابراوە -->
+                <input type="password" id="password" name="password" required>
             </div>
 
             <button type="submit" class="btn-login">
