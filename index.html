@@ -1,61 +1,157 @@
 <!DOCTYPE html>
-<html lang="ckb" dir="rtl">
+<html lang="ku" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>چوونەژوورەوە — ROMA STONE</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>چوونەژوورەوە | ROMA STONE</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            /* لێرەدا دەتوانیت وێنەی باکگراوندەکەت دابنێیت */
+            background: url('https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?q=80&w=1920') no-repeat center center fixed;
+            background-size: cover;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .login-container {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        .logo-area img {
+            width: 70px;
+            height: auto;
+            margin-bottom: 10px;
+        }
+
+        .brand-name {
+            font-size: 24px;
+            font-weight: bold;
+            color: #111;
+            letter-spacing: 0.5px;
+            margin-bottom: 5px;
+        }
+
+        .subtitle {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 15px;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+            text-align: right;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 12px;
+            color: #777;
+            margin-bottom: 5px;
+            padding-right: 5px;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #dcdcdc;
+            border-radius: 6px;
+            background-color: #f0f4f9;
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .input-group input:focus {
+            border-color: #e91e63;
+            background-color: #fff;
+        }
+
+        .btn-login {
+            width: 100%;
+            padding: 14px;
+            background-color: #e91e63; /* ئەو ڕەنگە پەمەیی/سوورەی ناو وێنەکە */
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            margin-top: 20px;
+            transition: background 0.2s;
+        }
+
+        .btn-login:hover {
+            background-color: #d81b60;
+        }
+
+        /* ئایکۆنی دەرگا/چوونەژوورەوە */
+        .login-icon {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid currentColor;
+            border-left: none;
+            position: relative;
+        }
+        .login-icon::before {
+            content: '→';
+            position: absolute;
+            left: -6px;
+            top: -7px;
+            font-size: 14px;
+        }
+    </style>
 </head>
 <body>
 
-<div class="wrap">
-  <div class="card">
+    <div class="login-container">
+        <!-- بەشی لۆگۆ -->
+        <div class="logo-area">
+            <!-- دەتوانیت لینکی وێنەی کۆلۆسیۆمەکە لێرە دابنێیت -->
+            <img src="https://cdn-icons-png.flaticon.com/512/2164/2164832.png" alt="Colosseum Logo">
+            <div class="brand-name">ROMA STONE</div>
+            <div class="subtitle">کارگەی ڕۆما</div>
+        </div>
 
-    <div class="logo">
-      <svg viewBox="0 0 64 64" width="46" height="46">
-        <rect x="4" y="30" width="56" height="26" fill="none" stroke="#2b2b2b" stroke-width="2.5"/>
-        <rect x="4" y="30" width="56" height="6" fill="#2b2b2b"/>
-        <g fill="none" stroke="#2b2b2b" stroke-width="2.2">
-          <path d="M12 44 a4 4 0 0 1 8 0"/>
-          <path d="M24 44 a4 4 0 0 1 8 0"/>
-          <path d="M36 44 a4 4 0 0 1 8 0"/>
-          <path d="M48 44 a4 4 0 0 1 8 0"/>
-        </g>
-        <path d="M8 30 a24 24 0 0 1 48 0" fill="none" stroke="#2b2b2b" stroke-width="2.5"/>
-      </svg>
+        <!-- فۆرمی چوونەژوورەوە -->
+        <form>
+            <div class="input-group">
+                <label for="username">ناوی بەکارهێنەر</label>
+                <input type="text" id="username" placeholder="harem" required>
+            </div>
+
+            <div class="input-group">
+                <label for="password">وشەی نهێنی</label>
+                <input type="password" id="password" placeholder="....." required>
+            </div>
+
+            <button type="submit" class="btn-login">
+                <span class="login-icon"></span>
+                چوونەژوورەوە
+            </button>
+        </form>
     </div>
 
-    <h1 class="brand">ROMA STONE</h1>
-    <p class="subtitle">کارگەی ڕۆما</p>
-
-    <div class="divider"></div>
-
-    <form id="loginForm" onsubmit="return handleLogin(event)">
-
-      <div class="field">
-        <label>ناوی بەکارهێنەر</label>
-        <input type="text" id="username" placeholder="ناوی بەکارهێنەر" required>
-      </div>
-
-      <div class="field">
-        <label>وشەی نهێنی</label>
-        <input type="password" id="password" placeholder="وشەی نهێنی" required>
-      </div>
-
-      <p class="error-msg" id="errorMsg"></p>
-
-      <button type="submit" class="login-btn">
-        چوونەژوورەوە
-        <span class="arrow">→</span>
-      </button>
-
-    </form>
-
-  </div>
-</div>
-
-<script src="script.js"></script>
 </body>
+</html>
