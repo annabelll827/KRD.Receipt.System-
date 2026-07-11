@@ -1,16 +1,22 @@
-<!DOCTYPE html>
-<html lang="ku" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <title>بەڕێوەبردنی سیتەم</title>
-    <style>body { font-family: sans-serif; padding: 20px; background: #f4f6f9; }</style>
-</head>
-<body>
-    <div style="max-width: 900px; margin: auto; background: white; padding: 20px;">
-        <h3>(ناوی بەشەکە بنووسە: ڕاپۆرتەکان یان سندوقی سڕاوەکان)</h3>
-        <button onclick="location.href='dashboard.html'">گەڕانەوە بۆ داشبۆرد</button>
-        <hr>
-        <p style="text-align: center; margin-top: 50px;">هیچ داتایەک نەدۆزرایەوە</p>
-    </div>
-</body>
-</html>
+<div style="max-width:900px; margin:auto;">
+    <h3>هەموو وەسڵەکان</h3>
+    <table id="table" border="1" style="width:100%;"></table>
+    <script>
+        let receipts = JSON.parse(localStorage.getItem('savedReceipts') || '[]');
+        let t = document.getElementById('table');
+        receipts.forEach((r, i) => {
+            t.innerHTML += `<tr><td>${r.customerName}</td><td>$${r.grandTotal}</td>
+            <td><button onclick="edit(${i})">دەستکاری</button>
+            <button onclick="del(${i})">سڕینەوە</button></td></tr>`;
+        });
+        function del(i) {
+            let trash = JSON.parse(localStorage.getItem('trashReceipts') || '[]');
+            trash.push(receipts[i]);
+            localStorage.setItem('trashReceipts', JSON.stringify(trash));
+            receipts.splice(i, 1);
+            localStorage.setItem('savedReceipts', JSON.stringify(receipts));
+            location.reload();
+        }
+        function edit(i) { localStorage.setItem('editIndex', i); location.href='create-receipt.html'; }
+    </script>
+</div>
