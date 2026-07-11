@@ -1,55 +1,67 @@
 <!DOCTYPE html>
-<html lang="ku" dir="rtl" class="notranslate">
+<html lang="ku" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KRD Receipt System | داشبۆرد</title>
+    <title>داشبۆرد | KRD Receipt System</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        body { background-color: #f4f6f9; color: #333; padding: 15px; }
-        .header-top { display: flex; justify-content: space-between; align-items: center; background: #fff; padding: 12px 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); margin-bottom: 20px; }
-        .company-title { font-size: 18px; font-weight: bold; color: #2c3e50; }
-        .btn-logout-small { padding: 6px 12px; border-radius: 5px; font-size: 13px; font-weight: bold; border: 1px solid #e74c3c; background-color: transparent; color: #e74c3c; cursor: pointer; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: sans-serif; }
+        body { background-color: #f4f6f9; padding: 20px; }
         
-        .stats-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 15px; }
-        .stat-card { background: #fff; padding: 15px; border-radius: 8px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.04); border: 1px solid #e2e8f0; }
-        .stat-card i { font-size: 24px; margin-bottom: 8px; display: block; }
-        .stat-card .num { font-size: 20px; font-weight: bold; margin-bottom: 4px; color: #2c3e50; }
-        .stat-card .label { font-size: 11px; color: #7f8c8d; font-weight: bold; }
+        .header { display: flex; justify-content: space-between; align-items: center; background: #fff; padding: 15px; margin-bottom: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
         
-        /* بەشی مێنووی خوارەوە */
-        .menu-footer { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 20px; }
-        .btn-menu { background: #2c3e50; color: #fff; padding: 15px; border-radius: 8px; text-align: center; text-decoration: none; font-weight: bold; font-size: 14px; }
-        .btn-menu.full { grid-column: span 2; background: #e91e63; }
+        /* کارتەکان - ٤ دانە لەسەرەوە، ٣ دانە لە خوارەوە */
+        .stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 10px; }
+        .stats-row-2 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 20px; }
+        
+        .stat-card { background: #fff; padding: 15px; text-align: center; border-radius: 5px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); border: 1px solid #ddd; }
+        .stat-card i { font-size: 20px; margin-bottom: 8px; display: block; }
+        .stat-card .num { font-size: 18px; font-weight: bold; margin-bottom: 5px; }
+        .stat-card .label { font-size: 12px; color: #666; }
+
+        /* دوگمەکانی مێنووی خوارەوە */
+        .btn-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+        .btn { padding: 12px; border: 1px solid #ccc; background: #fff; text-align: center; text-decoration: none; color: #333; font-size: 13px; border-radius: 4px; }
+        .btn-main { background: #e91e63; color: #fff; border: none; }
     </style>
 </head>
 <body>
 
-    <div class="header-top">
-        <div class="company-title">KRD Receipt System</div>
-        <button onclick="logout()" class="btn-logout-small">دەرچوون</button>
+    <div class="header">
+        <div>ROMA STONE - کارگەی پێما</div>
+        <button onclick="logout()" class="btn">دەرچوون لە سیستم</button>
     </div>
 
-    <!-- کارتەکانی سەرەوە -->
-    <div class="stats-grid">
+    <!-- ڕیزی یەکەم: ٤ کارت -->
+    <div class="stats-row">
+        <div class="stat-card"><i class="fa-solid fa-exclamation-triangle" style="color:#f1c40f"></i><div class="num" id="count-qarz">0</div><div class="label">وەسڵی قەرز</div></div>
+        <div class="stat-card"><i class="fa-solid fa-times-circle" style="color:#666"></i><div class="num" id="count-barnakra">0</div><div class="label">وەسڵی بارنەکراو</div></div>
         <div class="stat-card"><i class="fa-solid fa-check-circle" style="color:#2ecc71"></i><div class="num" id="count-bar">0</div><div class="label">وەسڵی بارکراو</div></div>
         <div class="stat-card"><i class="fa-solid fa-dollar-sign" style="color:#e91e63"></i><div class="num" id="total-all">$0</div><div class="label">کۆی گشتی</div></div>
-        <div class="stat-card"><i class="fa-solid fa-exclamation-triangle" style="color:#f1c40f"></i><div class="num" id="count-qarz">0</div><div class="label">وەسڵی قەرز</div></div>
-        <div class="stat-card"><i class="fa-solid fa-times-circle" style="color:#e67e22"></i><div class="num" id="count-barnakra">0</div><div class="label">وەسڵی بارنەکراو</div></div>
-        <div class="stat-card"><i class="fa-solid fa-chart-line" style="color:#27ae60"></i><div class="num" id="total-week">$0</div><div class="label">فرۆشی هەفتانە</div></div>
-        <div class="stat-card"><i class="fa-solid fa-calendar-alt" style="color:#d35400"></i><div class="num" id="total-day">$0</div><div class="label">فرۆشی ئەمڕۆ</div></div>
-        <div class="stat-card" style="grid-column: span 2;"><i class="fa-solid fa-chart-bar" style="color:#8e44ad"></i><div class="num" id="total-month">$0</div><div class="label">فرۆشی مانگانە</div></div>
     </div>
 
-    <!-- مێنووی خوارەوە -->
-    <div class="menu-footer">
-        <a href="all-receipts.html" class="btn-menu">هەموو وەسڵەکان</a>
-        <a href="reports.html" class="btn-menu">ڕاپۆرتەکان</a>
-        <a href="admin.html" class="btn-menu full">پانێڵی بەڕێوبەر</a>
+    <!-- ڕیزی دووەم: ٣ کارت -->
+    <div class="stats-row-2">
+        <div class="stat-card"><i class="fa-solid fa-chart-bar" style="color:#8e44ad"></i><div class="num" id="total-month">$0</div><div class="label">فرۆشی مانگانە</div></div>
+        <div class="stat-card"><i class="fa-solid fa-chart-line" style="color:#e67e22"></i><div class="num" id="total-week">$0</div><div class="label">فرۆشی هەفتانە</div></div>
+        <div class="stat-card"><i class="fa-solid fa-calendar-alt" style="color:#e91e63"></i><div class="num" id="total-day">$0</div><div class="label">فرۆشی ئەمڕۆ</div></div>
+    </div>
+
+    <!-- مێنووی دوگمەکان -->
+    <div class="btn-grid">
+        <a href="all-receipts.html" class="btn">هەموو وەسڵەکان</a>
+        <a href="reports.html" class="btn">ڕاپۆرتەکان</a>
+        <a href="create-receipt.html" class="btn btn-main">+ دروستکردنی وەسڵ</a>
+    </div>
+    <div class="btn-grid" style="margin-top: 10px;">
+        <a href="#" class="btn">سەندوقی بارکراوەکان</a>
+        <a href="#" class="btn">گەڕانەوە بۆ خاڵی پاشەکەوت</a>
+        <a href="admin.html" class="btn">پانێڵی بەڕێوبەر</a>
     </div>
 
     <script>
+        // هەمان لۆژیکی ئەژماردن کە پێشتر داماننا
         function updateDashboard() {
             let receipts = JSON.parse(localStorage.getItem('savedReceipts')) || [];
             let now = new Date();
@@ -59,15 +71,12 @@
             receipts.forEach(r => {
                 let rDate = new Date(r.date);
                 let amount = parseFloat(r.total) || 0;
-
                 if(r.status === 'بارکراو') counts.bar++;
                 else if(r.status === 'قەرز') counts.qarz++;
                 else if(r.status === 'بارنەکراو') counts.barnakra++;
-
                 totals.all += amount;
                 if(rDate.toDateString() === now.toDateString()) totals.day += amount;
-                if(rDate.getMonth() === now.getMonth() && rDate.getFullYear() === now.getFullYear()) totals.month += amount;
-                
+                if(rDate.getMonth() === now.getMonth()) totals.month += amount;
                 let weekAgo = new Date(); weekAgo.setDate(now.getDate() - 7);
                 if(rDate >= weekAgo) totals.week += amount;
             });
@@ -80,7 +89,6 @@
             document.getElementById('total-week').innerText = '$' + totals.week.toLocaleString();
             document.getElementById('total-month').innerText = '$' + totals.month.toLocaleString();
         }
-
         function logout() { localStorage.removeItem('isLoggedIn'); window.location.replace("index.html"); }
         document.addEventListener('DOMContentLoaded', updateDashboard);
     </script>
