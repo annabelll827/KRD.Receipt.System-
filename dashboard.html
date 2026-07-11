@@ -2,26 +2,36 @@
 <html lang="ku" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <title>داشبۆردی گشتی</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>داشبۆردی سەرەکی</title>
     <style>
-        body { font-family: sans-serif; background: #f4f6f9; padding: 20px; }
+        body { font-family: sans-serif; background: #f4f6f9; margin: 0; padding: 20px; }
         .container { max-width: 900px; margin: auto; }
-        .nav-btn { background: #2c3e50; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; text-decoration: none; display: inline-block; }
-        table { width: 100%; border-collapse: collapse; background: #fff; margin-top: 20px; }
-        th, td { padding: 12px; border: 1px solid #ddd; text-align: center; }
-        th { background: #eee; }
+        .nav-actions { margin-bottom: 20px; }
+        .nav-btn { background: #2c3e50; color: white; padding: 10px 15px; border-radius: 5px; text-decoration: none; display: inline-block; font-size: 14px; }
+        
+        table { width: 100%; border-collapse: collapse; background: #fff; margin-top: 10px; border-radius: 8px; overflow: hidden; }
+        th { background: #eee; padding: 12px; font-size: 14px; border: 1px solid #ddd; }
+        td { padding: 12px; border: 1px solid #ddd; text-align: center; font-size: 14px; }
+        .del-btn { background: #e74c3c; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; }
     </style>
 </head>
 <body>
 
 <div class="container">
     <h2>داشبۆردی سەرەکی</h2>
-    <a href="create-receipt.html" class="nav-btn">+ دروستکردنی وەسڵی نوێ</a>
-    <a href="reports.html" class="nav-btn" style="background:#e91e63">ڕاپۆرتەکان</a>
+    <div class="nav-actions">
+        <a href="create-receipt.html" class="nav-btn">+ دروستکردنی وەسڵی نوێ</a>
+    </div>
 
     <table>
         <thead>
-            <tr><th>کڕیار</th><th>ژمارەی وەسڵ</th><th>کۆی گشتی</th><th>کردار</th></tr>
+            <tr>
+                <th>کڕیار</th>
+                <th>ژمارەی وەسڵ</th>
+                <th>کۆی گشتی</th>
+                <th>کردار</th>
+            </tr>
         </thead>
         <tbody id="dashboardBody"></tbody>
     </table>
@@ -36,28 +46,22 @@
         receipts.forEach((r, index) => {
             body.innerHTML += `
                 <tr>
-                    <td>${r.customerName || 'بێ ناو'}</td>
+                    <td>${r.customerName || '-'}</td>
                     <td>${r.receiptNumber || '-'}</td>
-                    <td>$${r.grandTotal || 0}</td>
-                    <td>
-                        <button onclick="editReceipt(${index})">دەستکاری</button>
-                        <button onclick="deleteReceipt(${index})">سڕینەوە</button>
-                    </td>
+                    <td>${r.grandTotal || '0'}</td>
+                    <td><button class="del-btn" onclick="deleteReceipt(${index})">سڕینەوە</button></td>
                 </tr>
             `;
         });
     }
 
-    function editReceipt(index) {
-        localStorage.setItem('editIndex', index);
-        window.location.href = 'create-receipt.html';
-    }
-
     function deleteReceipt(index) {
-        let receipts = JSON.parse(localStorage.getItem('savedReceipts'));
-        receipts.splice(index, 1);
-        localStorage.setItem('savedReceipts', JSON.stringify(receipts));
-        loadReceipts();
+        if(confirm('دڵنیای لە سڕینەوەی؟')) {
+            let receipts = JSON.parse(localStorage.getItem('savedReceipts'));
+            receipts.splice(index, 1);
+            localStorage.setItem('savedReceipts', JSON.stringify(receipts));
+            loadReceipts();
+        }
     }
 
     loadReceipts();
