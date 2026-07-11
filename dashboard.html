@@ -2,70 +2,44 @@
 <html lang="ku" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>داشبۆردی سەرەکی</title>
+    <title>ROMA STONE</title>
     <style>
         body { font-family: sans-serif; background: #f4f6f9; margin: 0; padding: 20px; }
-        .container { max-width: 900px; margin: auto; }
-        .nav-actions { margin-bottom: 20px; }
-        .nav-btn { background: #2c3e50; color: white; padding: 10px 15px; border-radius: 5px; text-decoration: none; display: inline-block; font-size: 14px; }
-        
-        table { width: 100%; border-collapse: collapse; background: #fff; margin-top: 10px; border-radius: 8px; overflow: hidden; }
-        th { background: #eee; padding: 12px; font-size: 14px; border: 1px solid #ddd; }
-        td { padding: 12px; border: 1px solid #ddd; text-align: center; font-size: 14px; }
-        .del-btn { background: #e74c3c; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; }
+        .container { max-width: 1000px; margin: auto; }
+        .header { background: #dcdcdc; padding: 10px; display: flex; justify-content: space-between; border-radius: 5px; margin-bottom: 20px; }
+        .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 20px; }
+        .stat-card { background: white; padding: 20px; border-radius: 8px; text-align: center; border: 1px solid #ddd; }
+        .second-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 20px; }
+        .actions-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+        .btn { padding: 15px; border: none; border-radius: 5px; cursor: pointer; background: white; border: 1px solid #ddd; }
+        .btn-pink { background: #e91e63; color: white; }
     </style>
 </head>
 <body>
-
 <div class="container">
-    <h2>داشبۆردی سەرەکی</h2>
-    <div class="nav-actions">
-        <a href="create-receipt.html" class="nav-btn">+ دروستکردنی وەسڵی نوێ</a>
+    <div class="header">
+        <div><strong>ROMA STONE</strong> - کارگەی ڕۆما</div>
+        <button>دەرچوون لە سیستەم</button>
     </div>
-
-    <table>
-        <thead>
-            <tr>
-                <th>کڕیار</th>
-                <th>ژمارەی وەسڵ</th>
-                <th>کۆی گشتی</th>
-                <th>کردار</th>
-            </tr>
-        </thead>
-        <tbody id="dashboardBody"></tbody>
-    </table>
+    <div class="stats-grid">
+        <div class="stat-card"><div>$0</div>کۆی گشتی</div>
+        <div class="stat-card"><div>0</div>وەسڵی پارەدراو</div>
+        <div class="stat-card"><div>0</div>وەسڵی پارەنەدراو</div>
+        <div class="stat-card"><div>0</div>وەسڵی قەرز</div>
+    </div>
+    <div class="second-row">
+        <div class="stat-card"><div>$0</div>فرۆشی مانگانە</div>
+        <div class="stat-card"><div>$0</div>فرۆشی هەفتانە</div>
+        <div class="stat-card"><div>$0</div>فرۆشی ئەمرۆ</div>
+    </div>
+    <div class="actions-grid">
+        <button class="btn" onclick="location.href='all-receipts.html'">هەموو وەسڵەکان</button>
+        <button class="btn btn-pink" onclick="location.href='create-receipt.html'">+ دروستکردنی وەسڵ</button>
+        <button class="btn">سەندوقی سڕاوەکان</button>
+        <button class="btn">ڕاپۆرتەکان</button>
+        <button class="btn">کاڵا پاشەکەوتەکان</button>
+        <button class="btn">پانێڵی بەڕێوبەر</button>
+    </div>
 </div>
-
-<script>
-    function loadReceipts() {
-        let receipts = JSON.parse(localStorage.getItem('savedReceipts')) || [];
-        let body = document.getElementById('dashboardBody');
-        body.innerHTML = '';
-        
-        receipts.forEach((r, index) => {
-            body.innerHTML += `
-                <tr>
-                    <td>${r.customerName || '-'}</td>
-                    <td>${r.receiptNumber || '-'}</td>
-                    <td>${r.grandTotal || '0'}</td>
-                    <td><button class="del-btn" onclick="deleteReceipt(${index})">سڕینەوە</button></td>
-                </tr>
-            `;
-        });
-    }
-
-    function deleteReceipt(index) {
-        if(confirm('دڵنیای لە سڕینەوەی؟')) {
-            let receipts = JSON.parse(localStorage.getItem('savedReceipts'));
-            receipts.splice(index, 1);
-            localStorage.setItem('savedReceipts', JSON.stringify(receipts));
-            loadReceipts();
-        }
-    }
-
-    loadReceipts();
-</script>
-
 </body>
 </html>
