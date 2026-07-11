@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>هەموو وەسڵەکان | KRD Receipt System</title>
+    <!-- بەستنەوەی ئایکۆنەکان -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -19,25 +20,26 @@
             padding: 20px;
         }
 
-        .container {
+        .receipts-container {
             max-width: 1000px;
             margin: 0 auto;
             background-color: #ffffff;
             border-radius: 8px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-            padding: 30px;
+            padding: 25px;
         }
 
-        .header {
+        /* بەشی سەرەوە */
+        .header-section {
             display: flex;
             justify-content: space-between;
             align-items: center;
             border-bottom: 2px solid #f0f0f0;
             padding-bottom: 15px;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
         }
 
-        .title {
+        .title-area {
             font-size: 20px;
             font-weight: bold;
             color: #111;
@@ -46,127 +48,257 @@
             gap: 10px;
         }
 
-        .title i { color: #e91e63; }
+        .title-area i {
+            color: #bdc3c7;
+        }
+
+        .action-area {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            position: relative; /* بۆ ڕێکخستنی مێنووەکە */
+        }
+
+        /* دوگمەی فلتەر (ئایکۆنەکە) */
+        .filter-icon-btn {
+            background: #f0f2f5;
+            border: 1px solid #dcdcdc;
+            color: #2c3e50;
+            width: 40px;
+            height: 40px;
+            border-radius: 6px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.2s;
+        }
+        .filter-icon-btn:hover {
+            background: #e2e8f0;
+            color: #e91e63;
+        }
+
+        /* مێنووی فلتەر (Dropdown) */
+        .filter-dropdown {
+            display: none; /* لە سەرەتادا شاردراوەتەوە */
+            position: absolute;
+            top: 45px;
+            left: 0;
+            background-color: white;
+            min-width: 180px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.1);
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            z-index: 100;
+            overflow: hidden;
+        }
+
+        .filter-dropdown button {
+            color: #333;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            width: 100%;
+            border: none;
+            background: none;
+            text-align: right;
+            font-size: 13px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .filter-dropdown button:hover {
+            background-color: #f8fafc;
+            color: #e91e63;
+        }
+
+        /* نیشاندانی مێنوو کاتێک کلاسەکەی چالاك دەبێت */
+        .filter-dropdown.show {
+            display: block;
+        }
 
         .btn-back {
             background-color: #bdc3c7;
             color: #2c3e50;
-            padding: 5px 12px;
-            border-radius: 4px;
+            padding: 8px 16px;
+            border-radius: 6px;
             text-decoration: none;
-            font-size: 12px;
+            font-size: 13px;
             font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .btn-back:hover { background-color: #a6b0b5; }
+
+        /* خشتەی وەسڵەکان */
+        .table-responsive {
+            overflow-x: auto;
         }
 
-        /* ستایلی خشتەکە */
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 10px;
             text-align: right;
+            margin-top: 10px;
         }
 
         th, td {
             padding: 12px 15px;
-            border: 1px solid #e2e8f0;
+            border-bottom: 1px solid #eef0f2;
             font-size: 14px;
         }
 
         th {
             background-color: #f8fafc;
-            color: #4a5568;
+            color: #555;
             font-weight: bold;
         }
 
-        tr:nth-child(even) {
+        tr:hover {
             background-color: #fcfcfc;
         }
 
         .no-data {
             text-align: center;
-            padding: 30px;
             color: #777;
+            padding: 30px;
             font-style: italic;
         }
 
-        .btn-clear {
-            background-color: #e74c3c;
-            color: white;
-            border: none;
-            padding: 8px 15px;
+        /* باج بۆ دۆخی وەسڵەکە */
+        .badge {
+            padding: 4px 8px;
             border-radius: 4px;
-            cursor: pointer;
-            font-size: 12px;
+            font-size: 11px;
             font-weight: bold;
-            margin-bottom: 15px;
+            color: white;
         }
+        .bg-barکراو { background-color: #2ecc71; }
+        .bg-barنەکراو { background-color: #2c3e50; }
+        .bg-قەرز { background-color: #f39c12; }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <div class="header">
-            <div class="title">
+    <div class="receipts-container">
+        
+        <!-- سەرەتا / بەڕێوەبردن -->
+        <div class="header-section">
+            <div class="title-area">
                 <i class="fa-solid fa-list"></i>
-                لیستی هەموو وەسڵەکان
+                لیستی هەموو وەسڵەکان <span id="filterLabel" style="font-size: 12px; color: #e91e63; margin-right: 10px;">(هەموو)</span>
             </div>
-            <a href="dashboard.html" class="btn-back">گەڕانەوە</a>
+            
+            <div class="action-area">
+                <!-- ئایکۆنی فلتەر -->
+                <button class="filter-icon-btn" onclick="toggleFilterMenu(event)" title="فلتەرکردنی وەسڵەکان">
+                    <i class="fa-solid fa-filter"></i>
+                </button>
+                
+                <!-- مێنووی شاراوەی فلتەر -->
+                <div class="filter-dropdown" id="filterMenu">
+                    <button onclick="filterReceipts('هەموو')"><i class="fa-solid fa-globe"></i> پیشاندانی هەموو</button>
+                    <button onclick="filterReceipts('بارکراو')"><i class="fa-solid fa-circle-check" style="color: #2ecc71;"></i> وەسڵی بارکراو</button>
+                    <button onclick="filterReceipts('بارنەکراو')"><i class="fa-solid fa-circle-xmark" style="color: #2c3e50;"></i> وەسڵی بارنەکراو</button>
+                    <button onclick="filterReceipts('قەرز')"><i class="fa-solid fa-circle-exclamation" style="color: #f39c12;"></i> وەسڵی قەرز</button>
+                </div>
+
+                <a href="dashboard.html" class="btn-back">گەڕانەوە بۆ داشبۆرد</a>
+            </div>
         </div>
 
-        <button class="btn-clear" onclick="clearReceipts()"><i class="fa-solid fa-trash"></i> سڕینەوەی هەموو وەسڵەکان</button>
+        <!-- خشتەی داتاکان -->
+        <div class="table-responsive">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ژمارەی وەسڵ</th>
+                        <th>ناوی کڕیار</th>
+                        <th>ژمارەی مۆبایل</th>
+                        <th>بەروار</th>
+                        <th>کۆی گشتی</th>
+                        <th>دۆخ</th>
+                    </tr>
+                </thead>
+                <tbody id="receiptsTableBody">
+                    <!-- داتاکان لێرەدا لە ڕێگەی جافاسکڕیپتەوە دادەنرێن -->
+                </tbody>
+            </table>
+        </div>
 
-        <table>
-            <thead>
-                <tr>
-                    <th>ژ. وەسڵ</th>
-                    <th>ناوی کڕیار</th>
-                    <th>مۆبایل</th>
-                    <th>بەروار</th>
-                    <th>کۆی گشتی</th>
-                </tr>
-            </thead>
-            <tbody id="receiptsTableBody">
-                <!-- داتاکان لێرەدا بە جافاسکڕیپت زیاد دەبن -->
-            </tbody>
-        </table>
     </div>
 
     <script>
-        function loadReceipts() {
+        // گۆڕاوێکی جیهانی بۆ هەڵگرتنی وەسڵەکان
+        let allReceipts = [];
+
+        // پیشاندانی مێنووی فلتەر بە کلیک
+        function toggleFilterMenu(event) {
+            event.stopPropagation();
+            document.getElementById('filterMenu').classList.toggle('show');
+        }
+
+        // داخستنی مێنووەکە ئەگەر بەکارهێنەر لە دەرەوەی مێنووەکە کلیکی کرد
+        window.onclick = function(event) {
+            if (!event.target.matches('.filter-icon-btn') && !event.target.matches('.fa-filter')) {
+                const dropdown = document.getElementById('filterMenu');
+                if (dropdown.classList.contains('show')) {
+                    dropdown.classList.remove('show');
+                }
+            }
+        }
+
+        // بارکردنی وەسڵەکان لە لۆکاڵ ستۆریجەوە لە کاتی کردنەوەی لاپەڕەکە
+        document.addEventListener('DOMContentLoaded', function() {
+            allReceipts = JSON.parse(localStorage.getItem('savedReceipts')) || [];
+            displayReceipts(allReceipts);
+        });
+
+        // فەرمانی پیشاندانی وەسڵەکان لە ناو خشتەکەدا
+        function displayReceipts(receiptsList) {
             const tbody = document.getElementById('receiptsTableBody');
-            tbody.innerHTML = '';
+            tbody.innerHTML = ''; // پاککردنەوەی خشتەکە
 
-            // هێنانی وەسڵەکان لە لۆکاڵ ستۆریج
-            const receipts = JSON.parse(localStorage.getItem('savedReceipts')) || [];
-
-            if (receipts.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="5" class="no-data">هیچ وەسڵێک تۆمار نەکراوە!</td></tr>`;
+            if (receiptsList.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="6" class="no-data">هیچ وەسڵێک نەدۆزرایەوە!</td></tr>`;
                 return;
             }
 
-            // ڕیزکردنی وەسڵەکان لە خشتەکەدا
-            receipts.forEach(receipt => {
+            receiptsList.forEach(receipt => {
+                // ئەگەر دۆخی کاڵا پاشەکەوت نەکرابوو، بە شێوەی گریمانەیی دەنوسرێت "بارکراو"
+                const status = receipt.status || "بارکراو"; 
+                
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
-                    <td><b>${receipt.number}</b></td>
-                    <td>${receipt.name}</td>
-                    <td>${receipt.phone || '-'}</td>
-                    <td>${receipt.date}</td>
-                    <td style="color: #e91e63; font-weight: bold;">$${receipt.total}</td>
+                    <td><b>#${receipt.number || '---'}</b></td>
+                    <td>${receipt.name || '---'}</td>
+                    <td>${receipt.phone || '---'}</td>
+                    <td>${receipt.date || '---'}</td>
+                    <td style="color: #e91e63; font-weight: bold;">$${parseFloat(receipt.total).toLocaleString()}</td>
+                    <td><span class="badge bg-${status}">${status}</span></td>
                 `;
                 tbody.appendChild(tr);
             });
         }
 
-        function clearReceipts() {
-            if(confirm('دڵنیای لە سڕینەوەی هەموو وەسڵەکان؟')) {
-                localStorage.removeItem('savedReceipts');
-                loadReceipts();
+        // فەرمانی فلتەرکردنی وەسڵەکان بەپێی جۆرەکەیان
+        function filterReceipts(statusType) {
+            // نوێکردنەوەی نوسینی تەنیشت ناونیشانەکە
+            document.getElementById('filterLabel').innerText = `(${statusType})`;
+            
+            if (statusType === 'هەموو') {
+                displayReceipts(allReceipts);
+            } else {
+                const filtered = allReceipts.filter(r => (r.status || "بارکراو") === statusType);
+                displayReceipts(filtered);
             }
+            
+            // داخستنی مێنووەکە دوای هەڵبژاردن
+            document.getElementById('filterMenu').classList.remove('show');
         }
-
-        // لە کاتی کردنەوەی لاپەڕەکە داتاکان باربکە
-        window.onload = loadReceipts;
     </script>
 
 </body>
