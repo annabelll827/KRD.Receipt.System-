@@ -140,14 +140,7 @@
     </div>
 
     <script>
-        // پشکنینی ئەوەی ئایا بەکارهێنەر چۆتە ژوورەوە یاخود نا
-        document.addEventListener('DOMContentLoaded', function() {
-            if (localStorage.getItem('isLoggedIn') !== 'true') {
-                window.location.replace("index.html");
-            }
-        });
-
-        // فەرمانی چوونەدەرەوە
+        // فەرمانی چوونەدەرەوە و گەڕانەوە بۆ لاپەڕەی سەرەکی
         function logout() {
             localStorage.removeItem('isLoggedIn');
             window.location.replace("index.html");
