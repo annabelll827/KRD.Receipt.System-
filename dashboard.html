@@ -8,6 +8,7 @@
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         body { background-color: #f4f6f9; color: #333; padding: 15px; }
+        
         .header-top { display: flex; justify-content: space-between; align-items: center; background: #fff; padding: 12px 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); margin-bottom: 20px; }
         .company-title { font-size: 18px; font-weight: bold; color: #2c3e50; }
         .btn-logout-small { padding: 6px 12px; border-radius: 5px; font-size: 13px; font-weight: bold; border: 1px solid #e74c3c; background-color: transparent; color: #e74c3c; cursor: pointer; }
@@ -18,10 +19,21 @@
         .stat-card .num { font-size: 20px; font-weight: bold; margin-bottom: 4px; color: #2c3e50; }
         .stat-card .label { font-size: 11px; color: #7f8c8d; font-weight: bold; }
         
-        /* بەشی مێنووی خوارەوە - هەموو دوگمەکان لەسەر یەک */
+        /* مێنووی خوارەوە */
         .menu-footer { display: grid; grid-template-columns: 1fr; gap: 10px; margin-top: 20px; }
-        .btn-menu { background: #2c3e50; color: #fff; padding: 15px; border-radius: 8px; text-align: center; text-decoration: none; font-weight: bold; font-size: 14px; }
-        .btn-menu.primary { background: #e91e63; }
+        .btn-menu { 
+            background: #ffffff; 
+            color: #333; 
+            padding: 15px; 
+            border-radius: 8px; 
+            text-align: center; 
+            text-decoration: none; 
+            font-weight: bold; 
+            font-size: 14px; 
+            border: 1px solid #ddd;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .btn-menu.primary { background: #e91e63; color: #fff; border: none; }
     </style>
 </head>
 <body>
@@ -31,7 +43,6 @@
         <button onclick="logout()" class="btn-logout-small">دەرچوون</button>
     </div>
 
-    <!-- کارتەکانی سەرەوە -->
     <div class="stats-grid">
         <div class="stat-card"><i class="fa-solid fa-check-circle" style="color:#2ecc71"></i><div class="num" id="count-bar">0</div><div class="label">وەسڵی بارکراو</div></div>
         <div class="stat-card"><i class="fa-solid fa-dollar-sign" style="color:#e91e63"></i><div class="num" id="total-all">$0</div><div class="label">کۆی گشتی</div></div>
@@ -42,7 +53,6 @@
         <div class="stat-card" style="grid-column: span 2;"><i class="fa-solid fa-chart-bar" style="color:#8e44ad"></i><div class="num" id="total-month">$0</div><div class="label">فرۆشی مانگانە</div></div>
     </div>
 
-    <!-- مێنووی خوارەوە - بە ڕیزبەندی داواکراو -->
     <div class="menu-footer">
         <a href="create-receipt.html" class="btn-menu primary">دروستکردنی وەسڵ</a>
         <a href="all-receipts.html" class="btn-menu">هەموو وەسڵەکان</a>
