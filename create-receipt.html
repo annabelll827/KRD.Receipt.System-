@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>دروستکردنی وەسڵ | KRD Receipt System</title>
+    <!-- بەستنەوەی ئایکۆنەکان -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -216,6 +217,10 @@
             cursor: pointer;
             font-size: 16px;
         }
+
+        @media (max-width: 600px) {
+            .grid-2, .grid-3 { grid-template-columns: 1fr; }
+        }
     </style>
 </head>
 <body>
@@ -268,7 +273,7 @@
                     <i class="fa-solid fa-plus"></i> زیادکردنی کاڵا
                 </button>
 
-                <!-- لێرەدا کاڵاکان بە داینامیکی لکێنراون پێیەوە -->
+                <!-- لێرەدا کاڵاکان بە داینامیکی زیاد دەبن -->
                 <div id="itemsContainer"></div>
             </div>
 
@@ -298,7 +303,7 @@
     <script>
         let itemCount = 0;
 
-        // دابینکردنی بەرواری ئەمڕۆ وەک ברירת مِحدَل
+        // دابینکردنی بەرواری ئەمڕۆ وەک بەرواری بنەڕەتی
         document.getElementById('receiptDate').valueAsDate = new Date();
 
         // فەرمان بۆ دروستکردنی بەشی کاڵای نوێ کاتێک کلیک لە دوگمەکە دەکریت
@@ -355,7 +360,7 @@
             }
         }
 
-        // حیسابکردنی کۆی گشتی یەک کاڵا
+        // axuandnib کۆی گشتی یەک کاڵا
         function calculateItemTotal(id) {
             const card = document.getElementById(`itemCard_${id}`);
             const price = parseFloat(card.querySelector('.item-price').value) || 0;
@@ -379,15 +384,30 @@
             if(grandTotal < 0) grandTotal = 0;
             
             document.getElementById('grandTotalDisplay').innerText = grandTotal.toLocaleString();
+            return grandTotal;
         }
 
         // زیادکردنی یەکەم کاڵا بە شێوەیەکی ئۆتۆماتیکی لە کاتی کردنەوەی لاپەڕەکە
         addItemRow();
 
+        // پاشەکەوتکردنی داتاکان لە ناو لۆکاڵ ستۆریج و ناردنی کڕیار بۆ لاپەڕەی وەسڵەکان
         document.getElementById('receiptForm').addEventListener('submit', function(e) {
             e.preventDefault();
+
+            const newReceipt = {
+                name: document.getElementById('customerName').value,
+                phone: document.getElementById('customerPhone').value,
+                number: document.getElementById('receiptNumber').value,
+                date: document.getElementById('receiptDate').value,
+                total: calculateGrandTotal()
+            };
+
+            const existingReceipts = JSON.parse(localStorage.getItem('savedReceipts')) || [];
+            existingReceipts.push(newReceipt);
+            localStorage.setItem('savedReceipts', JSON.stringify(existingReceipts));
+
             alert('وەسڵەکە بە سەرکەوتوویی تۆمارکرا!');
-            window.location.href = "dashboard.html";
+            window.location.href = "all-receipts.html";
         });
     </script>
 
