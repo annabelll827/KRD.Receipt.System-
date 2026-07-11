@@ -4,31 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>چوونەژوورەوە | KRD Receipt System</title>
-    <!-- بەستنەوەی فایلی ستایلەکە -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
     <div class="login-container">
-        <!-- بەشی لۆگۆ و ناوی نوێی سیستم -->
         <div class="logo-area">
-            <!-- ئایکۆنێکی سادەی گونجاو بۆ سیستمەکە -->
             <img src="https://cdn-icons-png.flaticon.com/512/2721/2721291.png" alt="System Logo">
             <div class="brand-name">KRD Receipt System</div>
         </div>
 
-        <!-- فۆرمی چوونەژوورەوە -->
-        <form action="login.php" method="POST">
+        <form id="loginForm">
             <div class="input-group">
                 <label for="username">ناوی بەکارهێنەر</label>
-                <!-- لێرەدا placeholder لابراوە -->
-                <input type="text" id="username" name="username" required>
+                <input type="text" id="username" required>
             </div>
 
             <div class="input-group">
                 <label for="password">وشەی نهێنی</label>
-                <!-- لێرەدا placeholder لابراوە -->
-                <input type="password" id="password" name="password" required>
+                <input type="password" id="password" required>
             </div>
 
             <button type="submit" class="btn-login">
@@ -37,6 +31,23 @@
             </button>
         </form>
     </div>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault(); 
+
+            const usernameInput = document.getElementById('username').value;
+            const passwordInput = document.getElementById('password').value;
+
+            // پشکنینی ناو و پاسوۆردی نوێ
+            if (usernameInput === "Callvin" && passwordInput === "654321") {
+                alert('چوونەژوورەوە سەرکەوتوو بوو!');
+                window.location.href = "dashboard.html"; 
+            } else {
+                alert('ناوی بەکارهێنەر یان وشەی نهێنی هەڵەیە!');
+            }
+        });
+    </script>
 
 </body>
 </html>
