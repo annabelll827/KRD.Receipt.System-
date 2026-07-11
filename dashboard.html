@@ -22,18 +22,16 @@
         /* مێنووی خوارەوە */
         .menu-footer { display: grid; grid-template-columns: 1fr; gap: 10px; margin-top: 20px; }
         .btn-menu { 
-            background: #ffffff; 
-            color: #333; 
+            background: #4a5d6e; /* ڕەساسییەکی کاڵی تایبەت */
+            color: #ffffff;      /* ڕەنگی دەق بە سپی بۆ ئەوەی بە جوانی دیار بێت */
             padding: 15px; 
             border-radius: 8px; 
             text-align: center; 
             text-decoration: none; 
             font-weight: bold; 
             font-size: 14px; 
-            border: 1px solid #ddd;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
         }
-        .btn-menu.primary { background: #e91e63; color: #fff; border: none; }
+        .btn-menu.primary { background: #e91e63; color: #fff; }
     </style>
 </head>
 <body>
@@ -43,6 +41,7 @@
         <button onclick="logout()" class="btn-logout-small">دەرچوون</button>
     </div>
 
+    <!-- کارتەکانی سەرەوە -->
     <div class="stats-grid">
         <div class="stat-card"><i class="fa-solid fa-check-circle" style="color:#2ecc71"></i><div class="num" id="count-bar">0</div><div class="label">وەسڵی بارکراو</div></div>
         <div class="stat-card"><i class="fa-solid fa-dollar-sign" style="color:#e91e63"></i><div class="num" id="total-all">$0</div><div class="label">کۆی گشتی</div></div>
@@ -53,6 +52,7 @@
         <div class="stat-card" style="grid-column: span 2;"><i class="fa-solid fa-chart-bar" style="color:#8e44ad"></i><div class="num" id="total-month">$0</div><div class="label">فرۆشی مانگانە</div></div>
     </div>
 
+    <!-- مێنووی خوارەوە -->
     <div class="menu-footer">
         <a href="create-receipt.html" class="btn-menu primary">دروستکردنی وەسڵ</a>
         <a href="all-receipts.html" class="btn-menu">هەموو وەسڵەکان</a>
