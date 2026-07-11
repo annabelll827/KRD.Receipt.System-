@@ -4,18 +4,26 @@
     <meta charset="UTF-8">
     <title>پانێڵی بەڕێوبەر</title>
     <style>
-        body { font-family: sans-serif; background: #f4f6f9; padding: 20px; }
-        table { width: 100%; border-collapse: collapse; background: #fff; margin-top: 20px; }
-        th, td { padding: 12px; border: 1px solid #ddd; text-align: center; }
-        .btn { padding: 5px 10px; cursor: pointer; border: none; border-radius: 4px; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f4f6f9; padding: 20px; color: #333; }
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .back-btn { background: #4a5d6e; color: #fff; text-decoration: none; padding: 8px 15px; border-radius: 6px; font-size: 14px; }
+        table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+        th { background: #2c3e50; color: #fff; padding: 15px; }
+        td { padding: 12px; border-bottom: 1px solid #eee; text-align: center; }
+        .btn { padding: 6px 12px; cursor: pointer; border: none; border-radius: 5px; font-weight: bold; margin: 2px; transition: 0.3s; }
         .del { background: #e74c3c; color: #fff; }
         .edit { background: #3498db; color: #fff; }
         .res { background: #2ecc71; color: #fff; }
+        .perm { background: #555; color: #fff; }
+        .btn:hover { opacity: 0.8; }
     </style>
 </head>
 <body>
-    <h2>پانێڵی بەڕێوبەر</h2>
-    <a href="dashboard.html">گەڕانەوە بۆ داشبۆرد</a>
+
+    <div class="header">
+        <h2>ڕێکخستنی وەسڵەکان</h2>
+        <a href="dashboard.html" class="back-btn">گەڕانەوە بۆ داشبۆرد</a>
+    </div>
     
     <table>
         <thead>
@@ -39,12 +47,13 @@
                 body.innerHTML += `
                     <tr>
                         <td>${r.name}</td>
-                        <td>$${r.total}</td>
-                        <td>${r.status || 'سڕاوەتەوە'}</td>
+                        <td>$${parseFloat(r.total).toLocaleString()}</td>
+                        <td>${r.status}</td>
                         <td>
-                            <button class="edit" onclick="editReceipt(${index})">ئیدیت</button>
-                            <button class="del" onclick="deleteReceipt(${index})">سڕینەوە</button>
-                            ${r.status === 'سڕاوەتەوە' ? `<button class="res" onclick="restoreReceipt(${index})">گەڕانەوە</button>` : ''}
+                            <button class="btn edit" onclick="editReceipt(${index})">ئیدیت</button>
+                            <button class="btn del" onclick="deleteReceipt(${index})">سڕینەوە</button>
+                            <button class="btn perm" onclick="permanentDelete(${index})">سڕینەوەی یەکجاری</button>
+                            ${r.status === 'سڕاوەتەوە' ? `<button class="btn res" onclick="restoreReceipt(${index})">گەڕانەوە</button>` : ''}
                         </td>
                     </tr>
                 `;
@@ -53,15 +62,23 @@
 
         function deleteReceipt(index) {
             let receipts = JSON.parse(localStorage.getItem('savedReceipts'));
-            // لێرە وەسڵەکە بە تەواوی ناسڕینەوە، تەنها دۆخەکەی دەگۆڕین بۆ 'سڕاوەتەوە'
             receipts[index].status = 'سڕاوەتەوە';
             localStorage.setItem('savedReceipts', JSON.stringify(receipts));
             loadAdmin();
         }
 
+        function permanentDelete(index) {
+            if (confirm("دڵنیای لە سڕینەوەی ئەم وەسڵە بە یەکجاری؟")) {
+                let receipts = JSON.parse(localStorage.getItem('savedReceipts'));
+                receipts.splice(index, 1);
+                localStorage.setItem('savedReceipts', JSON.stringify(receipts));
+                loadAdmin();
+            }
+        }
+
         function restoreReceipt(index) {
             let receipts = JSON.parse(localStorage.getItem('savedReceipts'));
-            receipts[index].status = 'بارکراو'; // دەگەڕێتەوە دۆخی ئاسایی
+            receipts[index].status = 'بارکراو';
             localStorage.setItem('savedReceipts', JSON.stringify(receipts));
             loadAdmin();
         }
