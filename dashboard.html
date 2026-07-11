@@ -4,20 +4,47 @@
     <meta charset="UTF-8">
     <meta name="google" content="notranslate">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ROMA STONE | داشبۆرد</title>
+    <title>KRD Receipt System | داشبۆرد</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         body { background-color: #f4f6f9; color: #333; padding: 15px; }
         
-        .header-top { display: flex; justify-content: space-between; align-items: center; background: #fff; padding: 10px 15px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); margin-bottom: 20px; }
-        .user-info { font-weight: bold; color: #2c3e50; font-size: 14px; text-align: left; }
-        .company-title { font-size: 18px; font-weight: bold; color: #e91e63; }
-        
-        .btn-top { padding: 6px 12px; border-radius: 5px; font-size: 12px; font-weight: bold; text-decoration: none; display: inline-flex; align-items: center; gap: 5px; border: none; cursor: pointer; }
-        .btn-logout-top { background-color: #111; color: #fff; }
-        .btn-green { background-color: #2ecc71; color: #fff; }
-        .btn-dark { background-color: #2c3e50; color: #fff; }
+        /* ستایلی نوێی بەشی سەرەوە (Header) */
+        .header-top { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            background: #fff; 
+            padding: 12px 20px; 
+            border-radius: 8px; 
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05); 
+            margin-bottom: 20px; 
+        }
+        .company-title { 
+            font-size: 18px; 
+            font-weight: bold; 
+            color: #2c3e50; 
+            font-family: 'Segoe UI', Arial, sans-serif;
+        }
+        .btn-logout-small { 
+            padding: 6px 12px; 
+            border-radius: 5px; 
+            font-size: 13px; 
+            font-weight: bold; 
+            border: 1px solid #e74c3c; 
+            background-color: transparent; 
+            color: #e74c3c; 
+            cursor: pointer; 
+            display: inline-flex; 
+            align-items: center; 
+            gap: 6px; 
+            transition: all 0.2s ease;
+        }
+        .btn-logout-small:hover { 
+            background-color: #e74c3c; 
+            color: #fff; 
+        }
 
         /* کارتەکانی سەرەوە */
         .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 15px; }
@@ -51,17 +78,12 @@
 </head>
 <body>
 
-    <!-- بەشی سەرەوە -->
+    <!-- بەشی سەرەوەی نوێ -->
     <div class="header-top">
-        <button onclick="logout()" class="btn-top btn-logout-top"><i class="fa-solid fa-right-from-bracket"></i> چوونەدەرەوە لە سیستەم</button>
-        <div>
-            <div class="company-title">ROMA STONE</div>
-            <div style="font-size: 11px; color: #7f8c8d; text-align: center;">کارگەی ڕۆما</div>
-        </div>
-        <div style="display: flex; gap: 5px;">
-            <a href="#" class="btn-top btn-green"><i class="fa-solid fa-circle-check"></i> سەردێڕ</a>
-            <a href="#" class="btn-top btn-dark"><i class="fa-solid fa-plus"></i> گەڕانەوە</a>
-        </div>
+        <div class="company-title">KRD Receipt System</div>
+        <button onclick="logout()" class="btn-logout-small">
+            <i class="fa-solid fa-right-from-bracket"></i> دەرچوون
+        </button>
     </div>
 
     <!-- کارتەکانی ڕاپۆرت (ڕیزی یەکەم) -->
@@ -107,7 +129,7 @@
         </div>
     </div>
 
-    <!-- دوگمەکانی مێنووی سەرەکی (تەنها ٤ دوگمە پێویستەکە) -->
+    <!-- دوگمەکانی مێنووی سەرەکی -->
     <div class="menu-grid">
         <a href="create-receipt.html" class="btn-action primary"><i class="fa-solid fa-plus"></i> دروستکردنی وەسڵ</a>
         <a href="all-receipts.html" class="btn-action"><i class="fa-solid fa-folder-open"></i> هەموو وەسڵەکان</a>
