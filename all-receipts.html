@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="ku" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>هەموو وەسڵەکان | KRD Receipt System</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f4f6f9;
+            color: #333;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            padding: 30px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #f0f0f0;
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+        }
+
+        .title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #111;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .title i { color: #e91e63; }
+
+        .btn-back {
+            background-color: #bdc3c7;
+            color: #2c3e50;
+            padding: 5px 12px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        /* ستایلی خشتەکە */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            text-align: right;
+        }
+
+        th, td {
+            padding: 12px 15px;
+            border: 1px solid #e2e8f0;
+            font-size: 14px;
+        }
+
+        th {
+            background-color: #f8fafc;
+            color: #4a5568;
+            font-weight: bold;
+        }
+
+        tr:nth-child(even) {
+            background-color: #fcfcfc;
+        }
+
+        .no-data {
+            text-align: center;
+            padding: 30px;
+            color: #777;
+            font-style: italic;
+        }
+
+        .btn-clear {
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="header">
+            <div class="title">
+                <i class="fa-solid fa-list"></i>
+                لیستی هەموو وەسڵەکان
+            </div>
+            <a href="dashboard.html" class="btn-back">گەڕانەوە</a>
+        </div>
+
+        <button class="btn-clear" onclick="clearReceipts()"><i class="fa-solid fa-trash"></i> سڕینەوەی هەموو وەسڵەکان</button>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>ژ. وەسڵ</th>
+                    <th>ناوی کڕیار</th>
+                    <th>مۆبایل</th>
+                    <th>بەروار</th>
+                    <th>کۆی گشتی</th>
+                </tr>
+            </thead>
+            <tbody id="receiptsTableBody">
+                <!-- داتاکان لێرەدا بە جافاسکڕیپت زیاد دەبن -->
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        function loadReceipts() {
+            const tbody = document.getElementById('receiptsTableBody');
+            tbody.innerHTML = '';
+
+            // هێنانی وەسڵەکان لە لۆکاڵ ستۆریج
+            const receipts = JSON.parse(localStorage.getItem('savedReceipts')) || [];
+
+            if (receipts.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="5" class="no-data">هیچ وەسڵێک تۆمار نەکراوە!</td></tr>`;
+                return;
+            }
+
+            // ڕیزکردنی وەسڵەکان لە خشتەکەدا
+            receipts.forEach(receipt => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td><b>${receipt.number}</b></td>
+                    <td>${receipt.name}</td>
+                    <td>${receipt.phone || '-'}</td>
+                    <td>${receipt.date}</td>
+                    <td style="color: #e91e63; font-weight: bold;">$${receipt.total}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function clearReceipts() {
+            if(confirm('دڵنیای لە سڕینەوەی هەموو وەسڵەکان؟')) {
+                localStorage.removeItem('savedReceipts');
+                loadReceipts();
+            }
+        }
+
+        // لە کاتی کردنەوەی لاپەڕەکە داتاکان باربکە
+        window.onload = loadReceipts;
+    </script>
+
+</body>
+</html>
