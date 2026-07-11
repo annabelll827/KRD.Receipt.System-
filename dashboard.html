@@ -18,8 +18,10 @@
         .stat-card .num { font-size: 20px; font-weight: bold; margin-bottom: 4px; color: #2c3e50; }
         .stat-card .label { font-size: 11px; color: #7f8c8d; font-weight: bold; }
         
-        .menu-grid { display: grid; grid-template-columns: repeat(1, 1fr); gap: 12px; margin-top: 20px; }
-        .btn-action { display: flex; align-items: center; justify-content: center; gap: 8px; padding: 14px; border-radius: 6px; font-weight: bold; text-decoration: none; color: #fff; background-color: #e91e63; }
+        /* بەشی مێنووی خوارەوە */
+        .menu-footer { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 20px; }
+        .btn-menu { background: #2c3e50; color: #fff; padding: 15px; border-radius: 8px; text-align: center; text-decoration: none; font-weight: bold; font-size: 14px; }
+        .btn-menu.full { grid-column: span 2; background: #e91e63; }
     </style>
 </head>
 <body>
@@ -29,6 +31,7 @@
         <button onclick="logout()" class="btn-logout-small">دەرچوون</button>
     </div>
 
+    <!-- کارتەکانی سەرەوە -->
     <div class="stats-grid">
         <div class="stat-card"><i class="fa-solid fa-check-circle" style="color:#2ecc71"></i><div class="num" id="count-bar">0</div><div class="label">وەسڵی بارکراو</div></div>
         <div class="stat-card"><i class="fa-solid fa-dollar-sign" style="color:#e91e63"></i><div class="num" id="total-all">$0</div><div class="label">کۆی گشتی</div></div>
@@ -39,15 +42,17 @@
         <div class="stat-card" style="grid-column: span 2;"><i class="fa-solid fa-chart-bar" style="color:#8e44ad"></i><div class="num" id="total-month">$0</div><div class="label">فرۆشی مانگانە</div></div>
     </div>
 
-    <div class="menu-grid">
-        <a href="create-receipt.html" class="btn-action">دروستکردنی وەسڵ</a>
+    <!-- مێنووی خوارەوە -->
+    <div class="menu-footer">
+        <a href="all-receipts.html" class="btn-menu">هەموو وەسڵەکان</a>
+        <a href="reports.html" class="btn-menu">ڕاپۆرتەکان</a>
+        <a href="admin.html" class="btn-menu full">پانێڵی بەڕێوبەر</a>
     </div>
 
     <script>
         function updateDashboard() {
             let receipts = JSON.parse(localStorage.getItem('savedReceipts')) || [];
             let now = new Date();
-            
             let counts = { bar: 0, qarz: 0, barnakra: 0 };
             let totals = { all: 0, day: 0, week: 0, month: 0 };
 
@@ -55,12 +60,10 @@
                 let rDate = new Date(r.date);
                 let amount = parseFloat(r.total) || 0;
 
-                // ئەژمارکردنی دۆخەکان
                 if(r.status === 'بارکراو') counts.bar++;
                 else if(r.status === 'قەرز') counts.qarz++;
                 else if(r.status === 'بارنەکراو') counts.barnakra++;
 
-                // ئەژمارکردنی پارەکان
                 totals.all += amount;
                 if(rDate.toDateString() === now.toDateString()) totals.day += amount;
                 if(rDate.getMonth() === now.getMonth() && rDate.getFullYear() === now.getFullYear()) totals.month += amount;
