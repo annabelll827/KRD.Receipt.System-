@@ -2,130 +2,119 @@
 <html lang="ku" dir="rtl" class="notranslate">
 <head>
     <meta charset="UTF-8">
-    <meta name="google" content="notranslate"> <!-- ئەم دێڕە ڕێگری لە گۆگڵ دەکات دیزاینەکە تێکبدات -->
+    <meta name="google" content="notranslate">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>داشبۆرد | KRD Receipt System</title>
-    <!-- بەستنەوەی ئایکۆنەکان -->
+    <title>ROMA STONE | داشبۆرد</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: #f4f6f9; color: #333; padding: 15px; }
+        
+        .header-top { display: flex; justify-content: space-between; align-items: center; background: #fff; padding: 10px 15px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); margin-bottom: 20px; }
+        .user-info { font-weight: bold; color: #2c3e50; font-size: 14px; text-align: left; }
+        .company-title { font-size: 18px; font-weight: bold; color: #e91e63; }
+        
+        .btn-top { padding: 6px 12px; border-radius: 5px; font-size: 12px; font-weight: bold; text-decoration: none; display: inline-flex; align-items: center; gap: 5px; border: none; cursor: pointer; }
+        .btn-logout-top { background-color: #111; color: #fff; }
+        .btn-green { background-color: #2ecc71; color: #fff; }
+        .btn-dark { background-color: #2c3e50; color: #fff; }
 
-        body {
-            background-color: #f4f6f9;
-            color: #333;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            padding: 20px;
-        }
+        /* کارتەکانی سەرەوە */
+        .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 15px; }
+        .stats-grid-bottom { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 25px; max-width: 75%; margin-right: auto; margin-left: auto; }
+        
+        .stat-card { background: #fff; padding: 15px; border-radius: 8px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.04); border: 1px solid #e2e8f0; }
+        .stat-card i { font-size: 24px; margin-bottom: 8px; display: block; }
+        .stat-card .num { font-size: 20px; font-weight: bold; margin-bottom: 4px; color: #2c3e50; }
+        .stat-card .label { font-size: 11px; color: #7f8c8d; font-weight: bold; }
+        
+        .c-total { color: #e91e63; }
+        .c-success { color: #2ecc71; }
+        .c-warning { color: #e67e22; }
+        .c-danger { color: #f1c40f; }
 
-        .dashboard-container {
-            width: 100%;
-            max-width: 500px;
-            background-color: #ffffff;
-            border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-            padding: 30px;
-            text-align: center;
-        }
+        /* بەشی دوگمەکان */
+        .menu-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 12px; }
+        .menu-grid-bottom { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+        
+        .btn-action { display: flex; align-items: center; justify-content: center; gap: 8px; padding: 14px; border-radius: 6px; font-size: 14px; font-weight: bold; text-decoration: none; border: none; cursor: pointer; color: #2c3e50; background-color: #bdc3c7; }
+        .btn-action.primary { background-color: #e91e63; color: #fff; }
+        .btn-action i { font-size: 16px; }
 
-        .logo-area {
-            font-size: 50px;
-            color: #e91e63;
-            margin-bottom: 10px;
-        }
-
-        .welcome-title {
-            font-size: 22px;
-            font-weight: bold;
-            color: #2c3e50;
-            margin-bottom: 5px;
-        }
-
-        .system-subtitle {
-            font-size: 13px;
-            color: #7f8c8d;
-            margin-bottom: 30px;
-        }
-
-        /* ستایلی دوگمەکانی مێنوو بە جێگیری */
-        .menu-buttons {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        .btn-menu {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            padding: 15px;
-            background-color: #bdc3c7;
-            border: none;
-            border-radius: 8px;
-            color: #2c3e50;
-            font-size: 16px;
-            font-weight: bold;
-            text-decoration: none;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-
-        .btn-menu:hover {
-            background-color: #a6b0b5;
-        }
-
-        /* دوگمەی چوونە دەرەوە */
-        .btn-logout {
-            margin-top: 25px;
-            background-color: #e74c3c;
-            color: white;
-        }
-
-        .btn-logout:hover {
-            background-color: #c0392b;
+        @media (max-width: 768px) {
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .stats-grid-bottom { grid-template-columns: repeat(2, 1fr); max-width: 100%; }
+            .menu-grid { grid-template-columns: 1fr; }
+            .menu-grid-bottom { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
 
-    <div class="dashboard-container">
-        
-        <!-- بەشی سەرەوە و لۆگۆ -->
-        <div class="logo-area">
-            <i class="fa-solid fa-chart-line"></i>
+    <!-- بەشی سەرەوە -->
+    <div class="header-top">
+        <button onclick="logout()" class="btn-top btn-logout-top"><i class="fa-solid fa-right-from-bracket"></i> چوونەدەرەوە لە سیستەم</button>
+        <div>
+            <div class="company-title">ROMA STONE</div>
+            <div style="font-size: 11px; color: #7f8c8d; text-align: center;">کارگەی ڕۆما</div>
         </div>
-        <div class="welcome-title">بەخێربێیت بۆ داشبۆرد</div>
-        <div class="system-subtitle">سیستەمی بەڕێوەبردنی وەسڵەکانی KRD</div>
-
-        <!-- مێنووی دوگمە سەرەکییەکان -->
-        <div class="menu-buttons">
-            
-            <a href="create-receipt.html" class="btn-menu">
-                <i class="fa-solid fa-file-circle-plus"></i>
-                <span>دروستکردنی وەسڵی نوێ</span>
-            </a>
-
-            <a href="all-receipts.html" class="btn-menu">
-                <i class="fa-solid fa-folder-open"></i>
-                <span>هەموو وەسڵەکان</span>
-            </a>
-
-            <!-- دوگمەی چوونەدەرەوە -->
-            <button onclick="logout()" class="btn-menu btn-logout">
-                <i class="fa-solid fa-right-from-bracket"></i>
-                <span>چوونەدەرەوە لە سیستەم</span>
-            </button>
-
+        <div style="display: flex; gap: 5px;">
+            <a href="#" class="btn-top btn-green"><i class="fa-solid fa-circle-check"></i> سەردێڕ</a>
+            <a href="#" class="btn-top btn-dark"><i class="fa-solid fa-plus"></i> گەڕانەوە</a>
         </div>
+    </div>
 
+    <!-- کارتەکانی ڕاپۆرت (ڕیزی یەکەم) -->
+    <div class="stats-grid">
+        <div class="stat-card">
+            <i class="fa-solid fa-dollar-sign c-total"></i>
+            <div class="num">$0</div>
+            <div class="label">کۆی گشتی</div>
+        </div>
+        <div class="stat-card">
+            <i class="fa-solid fa-circle-check c-success"></i>
+            <div class="num">0</div>
+            <div class="label">وەسڵی بارکراو</div>
+        </div>
+        <div class="stat-card">
+            <i class="fa-solid fa-circle-xmark c-warning"></i>
+            <div class="num">0</div>
+            <div class="label">وەسڵی بارنەکراو</div>
+        </div>
+        <div class="stat-card">
+            <i class="fa-solid fa-circle-exclamation c-danger"></i>
+            <div class="num">0</div>
+            <div class="label">وەسڵی قەرز</div>
+        </div>
+    </div>
+
+    <!-- کارتەکانی ڕاپۆرت (ڕیزی دووەم) -->
+    <div class="stats-grid-bottom">
+        <div class="stat-card">
+            <i class="fa-solid fa-calendar-days c-total"></i>
+            <div class="num">$0</div>
+            <div class="label">فرۆشی ئەمڕۆ</div>
+        </div>
+        <div class="stat-card">
+            <i class="fa-solid fa-chart-line c-success"></i>
+            <div class="num">$0</div>
+            <div class="label">فرۆشی هەفتانە</div>
+        </div>
+        <div class="stat-card">
+            <i class="fa-solid fa-chart-bar c-total"></i>
+            <div class="num">$0</div>
+            <div class="label">فرۆشی مانگانە</div>
+        </div>
+    </div>
+
+    <!-- دوگمەکانی مێنووی سەرەکی (تەنها ٤ دوگمە پێویستەکە) -->
+    <div class="menu-grid">
+        <a href="create-receipt.html" class="btn-action primary"><i class="fa-solid fa-plus"></i> دروستکردنی وەسڵ</a>
+        <a href="all-receipts.html" class="btn-action"><i class="fa-solid fa-folder-open"></i> هەموو وەسڵەکان</a>
+        <a href="#" class="btn-action"><i class="fa-solid fa-chart-pie"></i> هێڵکارییەکان</a>
+    </div>
+    <div class="menu-grid-bottom">
+        <a href="#" class="btn-action"><i class="fa-solid fa-gear"></i> پانێڵی بەڕێوەبەر</a>
     </div>
 
     <script>
@@ -134,6 +123,5 @@
             window.location.replace("index.html");
         }
     </script>
-
 </body>
 </html>
