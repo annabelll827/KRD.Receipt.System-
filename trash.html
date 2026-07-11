@@ -1,0 +1,16 @@
+<div style="max-width:900px; margin:auto;">
+    <h3>سندوقی سڕاوەکان</h3>
+    <table id="trashTable" border="1" style="width:100%;"></table>
+    <script>
+        let trash = JSON.parse(localStorage.getItem('trashReceipts') || '[]');
+        let t = document.getElementById('trashTable');
+        trash.forEach((r, i) => {
+            t.innerHTML += `<tr><td>${r.customerName}</td><td><button onclick="pDel(${i})">سڕینەوەی هەمیشەیی</button></td></tr>`;
+        });
+        function pDel(i) {
+            trash.splice(i, 1);
+            localStorage.setItem('trashReceipts', JSON.stringify(trash));
+            location.reload();
+        }
+    </script>
+</div>
