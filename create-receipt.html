@@ -2,373 +2,58 @@
 <html lang="ku" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>دروستکردنی وەسڵ | KRD Receipt System</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>دروستکردن یان ئیدیتکردنی وەسڵ</title>
     <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        body {
-            background-color: #f4f6f9;
-            color: #333;
-            padding: 10px;
-        }
-
-        .receipt-container {
-            max-width: 850px;
-            margin: 10px auto;
-            background-color: #ffffff;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-            padding: 20px;
-        }
-
-        .receipt-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 2px solid #f0f0f0;
-            padding-bottom: 15px;
-            margin-bottom: 20px;
-        }
-
-        .receipt-title {
-            font-size: 18px;
-            font-weight: bold;
-            color: #111;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .receipt-title i { color: #e91e63; }
-
-        .btn-back {
-            background-color: #bdc3c7;
-            color: #2c3e50;
-            padding: 6px 14px;
-            border-radius: 4px;
-            text-decoration: none;
-            font-size: 13px;
-            font-weight: bold;
-        }
-
-        /* هێشتنەوەی خانەکان لە تەنیشت یەک تەنانەت لەسەر مۆبایلیش */
-        .grid-2 {
-            display: flex;
-            gap: 12px;
-            margin-bottom: 15px;
-        }
-
-        .grid-2 > .form-group {
-            flex: 1;
-        }
-
-        .grid-3 {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 15px;
-        }
-
-        .grid-3 > .form-group {
-            flex: 1;
-        }
-
-        .form-group {
-            text-align: right;
-        }
-
-        label {
-            display: block;
-            font-size: 13px;
-            color: #555;
-            margin-bottom: 6px;
-            font-weight: bold;
-        }
-
-        input, select, textarea {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #dcdcdc;
-            border-radius: 6px;
-            background-color: #f8fafc;
-            font-size: 14px;
-            outline: none;
-        }
-
-        input:focus, select:focus, textarea:focus {
-            border-color: #e91e63;
-            background-color: #fff;
-        }
-
-        .items-section {
-            border-top: 2px dashed #e2e8f0;
-            margin-top: 20px;
-            padding-top: 15px;
-        }
-
-        .item-card {
-            background-color: #f8fafc;
-            border: 1px solid #e2e8f0;
-            border-radius: 6px;
-            padding: 15px;
-            margin-bottom: 15px;
-            position: relative;
-        }
-
-        .btn-add-item {
-            background-color: #2c3e50;
-            color: white;
-            border: none;
-            padding: 10px 15px;
-            border-radius: 6px;
-            font-size: 13px;
-            font-weight: bold;
-            cursor: pointer;
-            margin-bottom: 15px;
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        /* ڕادیۆ بۆ دۆخی کاڵا */
-        .status-radio-group {
-            display: flex;
-            justify-content: space-around;
-            gap: 10px;
-            margin-bottom: 15px;
-            background: #fff;
-            padding: 10px;
-            border: 1px solid #dcdcdc;
-            border-radius: 6px;
-        }
-
-        .radio-label {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            cursor: pointer;
-            font-size: 13px;
-            font-weight: bold;
-        }
-
-        .summary-section {
-            border-top: 2px solid #f0f0f0;
-            padding-top: 15px;
-            margin-top: 20px;
-        }
-
-        .total-box {
-            background-color: #fcf3f6;
-            border: 1px dashed #e91e63;
-            border-radius: 6px;
-            padding: 12px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 15px;
-        }
-
-        .total-title { font-size: 15px; font-weight: bold; color: #e91e63; }
-        .total-amount { font-size: 20px; font-weight: bold; color: #e91e63; }
-
-        .btn-submit {
-            width: 100%;
-            padding: 12px;
-            background-color: #e91e63;
-            color: white;
-            border: none;
-            border-radius: 6px;
-            font-size: 15px;
-            font-weight: bold;
-            cursor: pointer;
-            margin-top: 15px;
-        }
-
-        .btn-delete-item {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            background: none;
-            border: none;
-            color: #e74c3c;
-            cursor: pointer;
-            font-size: 15px;
-        }
+        body { font-family: sans-serif; padding: 20px; background: #f4f6f9; }
+        input { width: 100%; padding: 10px; margin: 10px 0; display: block; }
+        .btn { padding: 10px 20px; cursor: pointer; border: none; background: #e91e63; color: white; border-radius: 5px; }
     </style>
 </head>
 <body>
 
-    <div class="receipt-container">
-        
-        <div class="receipt-header">
-            <div class="receipt-title">
-                <i class="fa-solid fa-file-invoice-dollar"></i>
-                دروستکردنی وەسڵ
-            </div>
-            <a href="dashboard.html" class="btn-back">گەڕانەوە</a>
-        </div>
-
-        <form id="receiptForm">
-            <!-- ناوی کڕیار و مۆبایل لە تەنیشت یەک -->
-            <div class="grid-2">
-                <div class="form-group">
-                    <label>ناوی کڕیار</label>
-                    <input type="text" id="customerName" required>
-                </div>
-                <div class="form-group">
-                    <label>ژمارەی مۆبایل</label>
-                    <input type="tel" id="customerPhone">
-                </div>
-            </div>
-
-            <!-- خانەی تێبینی لە خوارەوە -->
-            <div class="form-group" style="margin-bottom: 15px;">
-                <label>تێبینییەکان</label>
-                <textarea id="notes" rows="2"></textarea>
-            </div>
-
-            <!-- ژمارەی وەسڵ و بەروار لە تەنیشت یەک -->
-            <div class="grid-2">
-                <div class="form-group">
-                    <label>ژمارەی وەسڵ</label>
-                    <input type="text" id="receiptNumber" required>
-                </div>
-                <div class="form-group">
-                    <label>بەروار</label>
-                    <input type="date" id="receiptDate" required>
-                </div>
-            </div>
-
-            <!-- بەشی کاڵاکان -->
-            <div class="items-section">
-                <button type="button" class="btn-add-item" onclick="addItemRow()">
-                    <i class="fa-solid fa-plus"></i> زیادکردنی کاڵا
-                </button>
-                <div id="itemsContainer"></div>
-            </div>
-
-            <!-- بەشی کۆتایی و حسابات -->
-            <div class="summary-section">
-                <div class="grid-2">
-                    <div class="form-group">
-                        <label>بڕی داشکاندن ($)</label>
-                        <input type="number" id="discount" value="0" min="0" oninput="calculateGrandTotal()">
-                    </div>
-                    <div class="form-group"></div>
-                </div>
-
-                <div class="total-box">
-                    <div class="total-title">کۆی گشتی گشتی:</div>
-                    <div class="total-amount">$<span id="grandTotalDisplay">0</span></div>
-                </div>
-
-                <button type="submit" class="btn-submit">تۆمارکردنی وەسڵ</button>
-            </div>
-        </form>
-
-    </div>
+    <h2>وەسڵ</h2>
+    <input type="text" id="customerName" placeholder="ناوی کڕیار">
+    <input type="number" id="total" placeholder="کۆی گشتی">
+    <button class="btn" onclick="saveReceipt()">پاشەکەوتکردن</button>
+    <br><br>
+    <a href="dashboard.html">گەڕانەوە</a>
 
     <script>
-        let itemCount = 0;
+        // کاتێک لاپەڕەکە دەکرێتەوە، بزانە ئایا ئیدیتە یان نوێیە
+        document.addEventListener('DOMContentLoaded', () => {
+            let editIndex = localStorage.getItem('editIndex');
+            if (editIndex !== null) {
+                let receipts = JSON.parse(localStorage.getItem('savedReceipts'));
+                let r = receipts[editIndex];
+                document.getElementById('customerName').value = r.name;
+                document.getElementById('total').value = r.total;
+            }
+        });
 
-        document.getElementById('receiptDate').valueAsDate = new Date();
-
-        function addItemRow() {
-            itemCount++;
-            const container = document.getElementById('itemsContainer');
-            const itemCard = document.createElement('div');
-            itemCard.className = 'item-card';
-            itemCard.id = `itemCard_${itemCount}`;
+        function saveReceipt() {
+            let receipts = JSON.parse(localStorage.getItem('savedReceipts')) || [];
+            let editIndex = localStorage.getItem('editIndex');
             
-            itemCard.innerHTML = `
-                <button type="button" class="btn-delete-item" onclick="removeItemRow(${itemCount})">
-                    <i class="fa-solid fa-trash-can"></i>
-                </button>
-                
-                <div class="form-group" style="margin-bottom: 10px;">
-                    <label>ناوی کاڵا</label>
-                    <input type="text" required>
-                </div>
-                
-                <label>دۆخی کاڵا</label>
-                <div class="status-radio-group">
-                    <label class="radio-label"><input type="radio" name="status_${itemCount}" value="بارکراو" checked> بارکراو</label>
-                    <label class="radio-label"><input type="radio" name="status_${itemCount}" value="بارنەکراو"> بارنەکراو</label>
-                    <label class="radio-label"><input type="radio" name="status_${itemCount}" value="قەرز"> قەرز</label>
-                </div>
-                
-                <div class="grid-3">
-                    <div class="form-group">
-                        <label>نرخ ($)</label>
-                        <input type="number" class="item-price" value="0" min="0" oninput="calculateItemTotal(${itemCount})" required>
-                    </div>
-                    <div class="form-group">
-                        <label>ژمارە</label>
-                        <input type="number" class="item-qty" value="0" min="0" oninput="calculateItemTotal(${itemCount})" required>
-                    </div>
-                    <div class="form-group">
-                        <label>کۆی گشتی</label>
-                        <input type="number" class="item-total" value="0" readonly style="background-color: #edf2f7;">
-                    </div>
-                </div>
-            `;
-            container.appendChild(itemCard);
-        }
-
-        function removeItemRow(id) {
-            const card = document.getElementById(`itemCard_${id}`);
-            if(card) { card.remove(); calculateGrandTotal(); }
-        }
-
-        function calculateItemTotal(id) {
-            const card = document.getElementById(`itemCard_${id}`);
-            const price = parseFloat(card.querySelector('.item-price').value) || 0;
-            const qty = parseFloat(card.querySelector('.item-qty').value) || 0;
-            card.querySelector('.item-total').value = price * qty;
-            calculateGrandTotal();
-        }
-
-        function calculateGrandTotal() {
-            let sum = 0;
-            document.querySelectorAll('.item-total').forEach(input => { sum += parseFloat(input.value) || 0; });
-            const discount = parseFloat(document.getElementById('discount').value) || 0;
-            let grandTotal = sum - discount;
-            if(grandTotal < 0) grandTotal = 0;
-            document.getElementById('grandTotalDisplay').innerText = grandTotal.toLocaleString();
-            return grandTotal;
-        }
-
-        addItemRow();
-
-        document.getElementById('receiptForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-
-            // گرێدانی دۆخی یەکەم کاڵا بۆ ئەوەی لاپەڕەی فلتەرەکە بیخوێنێتەوە
-            const selectedStatus = document.querySelector('input[name="status_1"]:checked')?.value || "بارکراو";
-
-            const newReceipt = {
+            let newReceipt = {
                 name: document.getElementById('customerName').value,
-                phone: document.getElementById('customerPhone').value,
-                number: document.getElementById('receiptNumber').value,
-                date: document.getElementById('receiptDate').value,
-                total: calculateGrandTotal(),
-                status: selectedStatus
+                total: document.getElementById('total').value,
+                status: 'بارکراو',
+                date: new Date().toISOString()
             };
 
-            const existingReceipts = JSON.parse(localStorage.getItem('savedReceipts')) || [];
-            existingReceipts.push(newReceipt);
-            localStorage.setItem('savedReceipts', JSON.stringify(existingReceipts));
-
-            alert('وەسڵەکە بە سەرکەوتوویی تۆمارکرا!');
-            window.location.replace("all-receipts.html");
-        });
+            if (editIndex !== null) {
+                // ئەگەر ئیدیت بوو، بە جێگەی پێشوودا دایبنێ
+                receipts[editIndex] = newReceipt;
+                localStorage.removeItem('editIndex');
+            } else {
+                // ئەگەر وەسڵی نوێ بوو
+                receipts.push(newReceipt);
+            }
+            
+            localStorage.setItem('savedReceipts', JSON.stringify(receipts));
+            alert('بە سەرکەوتوویی پاشەکەوت کرا');
+            window.location.href = 'dashboard.html';
+        }
     </script>
-
 </body>
 </html>
